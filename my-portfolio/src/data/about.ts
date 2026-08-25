@@ -1,0 +1,3 @@
+export const aboutData = {
+    about:"bs computer engineering graduate from southern luzon state university. i've built most of my frontend skills through self-directed practice — courses, personal projects, hands-on experimentation — alongside my academic foundation in computer engineering. currently applying both as a frontend ai intern at flyrank, where i [confirm: what do you actually build/ship there?]. i lean on ai-assisted tools to move faster, but i read and reason through the code myself before it ships."
+}

@@ -5,7 +5,7 @@ interface NavbarProps {
 
 function Navbar({name}: NavbarProps) {
     return (
-        <nav>
+        <nav id="navbar" className="translate-y-2">
             <ul className="flex flex-row justify-between items-center m-auto p-4 shadow-md outline outline-black/3 rounded-md">
                 <p className="flex flex-row font-bold lowercase">{name}</p>
                 <li className="flex flex-row gap-4 text-gray-600">
