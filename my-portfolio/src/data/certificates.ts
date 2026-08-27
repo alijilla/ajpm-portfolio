@@ -1,44 +1,59 @@
-export const certiData = [{
-    type:"track certifications",
-    title:"Javascript 1 & 2",
+export const certificatesData = [
+   {
+    title:"Javascript 1",
     issuer:"cisco",
-    issue_date:"",
-    credential_url:"",
-    image_url:""
-     
+    issue_Month:"August",
+    issue_Year:2025,
+    credential_url:"https://www.credly.com/badges/4ebca7cd-f7b8-4da3-94b8-e4b7cf4c754e/linked_in_profile",
 }, 
    {
-    type:"track certifications",
-    title:"Python 1 & 2",
+    title:"Javascript 2",
     issuer:"cisco",
-    issue_date:"",
+    issue_Month:"August",
+    issue_Year:2025,
+    credential_url:"https://www.credly.com/badges/0ebbd8ae-e1d4-4e04-95ff-bda954499bc5/linked_in_profile",
+}, 
+   {
+    title:"Python 1",
+    issuer:"cisco",
+    issue_Month:"July",
+    issue_Year:2025,
+    credential_url:"https://www.credly.com/badges/382f63c4-215f-42da-a5b0-8507e4590d92/linked_in_profile",
+},
+   {
+    title:"Python 2",
+    issuer:"cisco",
+    issue_Month:"July",
+    issue_Year:2025,
+    credential_url:"https://www.credly.com/badges/86fbdaa7-5a26-478d-8d92-721679d31b8e/linked_in_profile",
+},  
+   {
+    title:"Certificate of completion: Claude 101",
+    issuer:"cisco",
+    issue_Month:"July",
+    issue_Year:2026,
     credential_url:"",
-    image_url:""
    },
    {
-    type:"track certifications",
+    title:"Start the UX Design Process: Empathize, Define, and Ideate",
+    issuer:"Google",
+    issue_Month:"August",
+    issue_Year:2025,
+    credential_url:"https://www.coursera.org/account/accomplishments/verify/TX5D11PGIVXB",
+   },
+   {
     title:"Google AI Essentials",
     issuer:"google",
-    issue_date:"",
-    credential_url:"",
-    image_url:""
+    issue_Month:"November",
+    issue_Year:2024,
+    credential_url:"https://www.coursera.org/account/accomplishments/records/DGNLHW5S5BF0",
    },
       {
-    type:"track certifications",
-    title:"AI Fluency: Framework & Foundations",
-    issuer:"anthropic",
-    issue_date:"",
-    credential_url:"",
-    image_url:""
-   },
-         {
-    type:"other certifications",
-    others:["foundations of cybersecurity",
-"play it safe: manage security risks",
-"network addressing & troubleshooting",
-"computer hardware basics",
-"ask questions to make data-driven decisions",
-"foundations: data, data, everywhere",
-"foundations of project management"],
+    title:"Certificate of Completion: Al Fluency Framework & Foundations",
+    issuer:"Anthropic",
+    issue_Month:"July",
+    issue_Year:2026,
+    credential_url:"https://verify.skilljar.com/c/t33fn6prw4aw",
    }
+        
 ];

@@ -1,32 +1,49 @@
+import {  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent,} from "@/components/ui/card"
+import {Badge} from "@/components/ui/badge"
 interface Projectprops{
-    title:string ,
-    description:string ,
-    category:string ,
-    role:string,
-    type:string,
-    stack:string[] ,
-    url: "string"
+    title:string;
+    description:string;
+    role:string;
+    type:string;
+    stack:string[];
+    live_git_url:string;
 }
 
-export default function Projects (props: Projectprops) {
+export default function Projects(props: Projectprops) {
     return (
         <section id="projects">
-            <article>
-                <div>
-                    <h1>{props.title}</h1>
-                    <p>{props.description}</p>
-                    <p>{props.category}</p>
-                    <p>{props.role}</p>
-                    <p>{props.type}</p>
-                    <p>{props.stack}</p>
-                    <p>{props.url}</p>
-                    <ul>
+            
+                <Card>
+                    <CardHeader>
+                        <CardTitle>
+                            {props.title}
+                        </CardTitle>
+                        <CardDescription>
+                           {props.type}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {props.description}
+                        <br></br><br></br>
+                        <span className="text-xs italic ">{props.role}</span>
+                    </CardContent>
+                    <CardFooter>
+                        
+                        <ul className="flex flex-row gap-4 md-gap-8">
                         {props.stack.map(stack => (
-                            <li key={stack}>{stack}</li>
+                            <Badge key={stack}>{stack}</Badge>
                         ))}
                     </ul>
-                </div>
-            </article>
+                    {props.live_git_url}
+                    </CardFooter>
+                </Card>      
+               
         </section>
     );
 }

@@ -1,8 +1,21 @@
 import Image from "next/image";
+import { Slot } from "@radix-ui/react-slot"
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarBadge,
+} from "@/components/ui/avatar"
+
 import { EnvelopeIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import {Badge} from "@/components/ui/badge"
+import {Button, buttonVariants} from "@/components/ui/button"
 interface HeroProps {
   role: string;
   headline: string;
+  headline_1:string;
   shortbio: string;
   cta: string;
   imageSrc: string;
@@ -10,46 +23,39 @@ interface HeroProps {
 export default function Hero({
   role,
   headline,
+  headline_1,
   shortbio,
   cta,
   imageSrc}: HeroProps) {
     return (
-        <section className="m-auto p-4 ">
-            <article className="flex flex-row justify-center items-center gap-4 md-gap-8">
+        <section className="m-auto p-4 lowercase ">
+            <article className="flex flex-col md:flex-row justify-center items-center gap-4 md-gap-8">
               <div className="basis-2/3 m-auto p-4">
-                <p className="w-fit text-xs text-white bg-sky-500 rounded-full p-2 lowercase">{role}</p>
-              
-              <h1 className="text-bold text-2xl md:text-3xl lg:text-4xl m-auto p-4">
-                {headline}
-              </h1>
-              <p className="m-auto p-4  text-xs text-gray-600">
-                {shortbio}
-                
-              </p>
-              <hr className="border-gray-300" />
-              <p className="text-xs text-black text-bold m-auto p-4">{cta}</p> 
-                 
+                <Badge className="w-fit text-xs text-accent rounded-full p-2 lowercase">{role}</Badge>
+                <h1 className="text-5xl font-extrabold tracking-tight md:text-7xl mt-4">
+                  {headline} <br></br> <span className="text-md text-muted-foreground">{headline_1}</span>
+                </h1>
+              <h2 className="m-auto p-4  text-md text-gray-600">
+                {shortbio}  
+              </h2>
               <div className="">
-                <a className="w-fit text-xs text-white bg-black rounded-md p-2 lowercase" href="#Contact">
+                <Button nativeButton={false} render={<a href="#contact"/>}>
                   <EnvelopeIcon className="h-4 w-4 inline mr-2" />
                   email me
-                </a>
-                <a className="w-fit text-xs text-gray-600 rounded-md p-2 lowercase" href="#Resume">
-                  <ArrowDownTrayIcon className="h-4 w-4 inline mr-2" />
+                </Button>
+                <Button nativeButton={false} variant="outline" render={<a href="#contact"/>}>
+                <ArrowDownTrayIcon className="h-4 w-4 inline mr-2" />
                   resume
-                </a>
+                </Button>
               </div>
 
               </div> 
 
-              <div className="relative bg-gray-300 shadow-lg overflow-hidden w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full m-auto p-4">
-                <Image
-                  src={imageSrc}
-                  alt="Profile"
-                  fill
-                  quality={1000}
-                  className="object-cover"
-                />
+              <div className="m-auto p-4">
+    <Avatar className=" shadow-lg  w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
+      <AvatarImage src={imageSrc} className="w-full h-full object-cover" alt="Alyssa Jade" />
+      <AvatarFallback>AM</AvatarFallback>
+    </Avatar>
               </div>
             </article>
         </section>

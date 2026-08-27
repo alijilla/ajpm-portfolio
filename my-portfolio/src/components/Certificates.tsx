@@ -1,41 +1,42 @@
+import {  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardAction,
+  CardDescription,
+  CardContent} from "@/components/ui/card";
+
+  import {Button} from "@/components/ui/button";
+  
 interface Certificateprops{
-    type:string;
     title: string;
     issuer:string;
-    issue_date:string;
+    issue_Month:string;
+    issue_Year:number;
     credential_url:string;
-    image_url:string;
-    others:string[];
 }
 
 export default function Certificates (props:Certificateprops) {
     return (
-        <section>
-            <article>
-                <div>
-                    <p>
-                        {props.type}
-                    </p>
-                    <p>
-                        {props.title}
-                    </p>
-                                        <p>
-                        {props.issuer}
-                    </p>
-                    <p>
-                        {props.issue_date}
-                    </p>
+        <section className="lowercase">
 
-                    <div>
-                        <a href={props.credential_url}></a>
-                        <a href={props.image_url}></a>
-                        
-                    </div>
-                                        <p>
-                        {props.type}
-                    </p>
-                </div>
-            </article>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>
+                        {props.title}
+                        </CardTitle>
+                        <CardDescription>
+                        {props.issuer} <br></br>
+                        <span>{props.issue_Month} {props.issue_Year}</span>
+                        </CardDescription>
+                    </CardHeader>
+                    <CardFooter>
+                        <Button>
+                        <a href={props.credential_url}>View Credential</a>
+                        </Button>
+                    </CardFooter>
+                </Card>                
         </section>
     );
 }
+

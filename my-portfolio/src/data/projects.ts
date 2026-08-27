@@ -1,14 +1,11 @@
-import { url } from "inspector";
-
-export const projectsData = [
+export const projectsData =[
     { 
     title: "automated laundry drop-off machine",
     description: "thesis — iot machine with weight sensing, automated billing, and pickup notifications.",
-    category: "group project",
     role:"my role: hardware architecture, arduino programming, transaction logic",
-    type: " ",
+    type: "group project ",
     stack: ["arduino","Embedded C++", "transaction logic"],
-    url: ""
+    live_git_url: ""
 },
 {   
     title:"Fincancial Companion",
@@ -16,7 +13,7 @@ export const projectsData = [
     role:"",
     type:"solo project",
     stack:["HTML", "CSS", "JavaScript"],
-    url:"",
+    live_git_url:"https://alijilla.github.io/-EXPENSES-DIARY-Your-Essential-Financial-Companion/"
 }, 
 {
     title:"mimaropa map",
@@ -24,7 +21,7 @@ export const projectsData = [
     role:"",
     type:"solo project",
     stack:["python","jupyter","data viz"],
-    url:"",
+    live_git_url:"https://alijilla.github.io/MIMAROPA/"
 }
 
 ];
