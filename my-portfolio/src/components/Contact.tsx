@@ -94,7 +94,7 @@ export function ContactForm() {
           <a href="https://www.linkedin.com/in/alyssa-jade-merjilla/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
             <FaLinkedinIn className="h-5 w-5" />
           </a>
-          <a href="https://instagram.com/yourusername" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Instagram">
+          <a href="https://instagram.com/yhttps://www.instagram.com/alyssa_jilla/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Instagram">
             <SiInstagram className="h-5 w-5" />
           </a>
           <a href="https://www.facebook.com/allyson.jade.77/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Facebook">
