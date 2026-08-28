@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Resend } from "resend";
 import { formSchema } from "@/lib/schemas/contact";
 
-const resend = new Resend ("re_YzL9YvdU_KmknGx7wtkumnkNcUD8qpC8G"); // temporary — moving this next lesson
+const resend = new Resend(process.env.RESEND_API_KEY); 
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -28,7 +28,11 @@ export async function POST(request: Request) {
     replyTo: email,
     text: `From: ${name} <${email}>\n\n${message}`,
   });
-
+    console.log("Key length:", process.env.RESEND_API_KEY?.length);
+console.log("Key starts with:", process.env.RESEND_API_KEY?.slice(0, 5));
+console.log("Key ends with:", JSON.stringify(process.env.RESEND_API_KEY?.slice(-3)));
+console.log("RAW ENV KEY:", JSON.stringify(process.env.RESEND_API_KEY));
+console.log("KEY LENGTH:", process.env.RESEND_API_KEY?.length);
       if (error) {
     return Response.json(
       {

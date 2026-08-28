@@ -33,9 +33,9 @@ export default function ProjectCard() {
         <Dialog key={project.title}>
 
           {/* Card trigger — clicking opens the dialog */}
-          <DialogTrigger className="text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <Card className="hover:shadow-md transition-shadow duration-200 cursor-pointer  h-full">
-              <CardHeader className="p-0 overflow-hidden rounded-t-xl">
+          <DialogTrigger nativeButton={false} render={<div role="button" tabIndex={0} className="text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl group cursor-pointer h-full" />}>
+              <Card className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
+                <CardHeader className="p-0 overflow-hidden rounded-t-xl">
                 {project.imagesource[0] ? (
                   <Image
                     src={project.imagesource[0]}
@@ -70,7 +70,7 @@ export default function ProjectCard() {
 
             {/* Project image or placeholder */}
             {project.imagesource[0] ? 
-             ( <div className="flex flex-row overflow-hidden hover:overflow-x-scroll">
+             ( <div className="flex flex-row overflow-x-auto snap-x gap-2 pb-2">
                 {project.imagesource.map((imageSrc) => (
                 <Image
                 key={imageSrc}

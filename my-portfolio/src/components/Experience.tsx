@@ -22,7 +22,7 @@ export default function Experience(props: ExperienceProp) {
 
   return (
     <article className="flex-1 min-w-[260px]">
-      <Card className="lowercase h-full flex flex-col transition-shadow hover:shadow-md">
+      <Card className="lowercase h-full flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 
         <CardHeader className="pb-2">
           {/* "current" dot for ongoing roles */}
