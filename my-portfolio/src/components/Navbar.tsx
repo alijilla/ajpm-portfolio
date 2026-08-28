@@ -15,50 +15,55 @@ interface NavbarProps {
 function Navbar({ name }: NavbarProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navlist = [
-  {tabname:"about", tabhref:"#about", style:"hover:text-secondary-foreground"},
-  {tabname:"experience",tabhref:"#experience", style:"hover:text-secondary-foreground"},
-  {tabname:"project", tabhref:"#project", style:"hover:text-secondary-foreground"},
-  {tabname:"contact", tabhref:"#contact", style:"hover:text-muted-foreground text-foreground font-extrabold underline"},
+  {tabname:"about", tabhref:"#about"},
+  {tabname:"experience", tabhref:"#experience"},
+  {tabname:"projects", tabhref:"#projects"},
+  {tabname:"contact", tabhref:"#contact"},
   ]
   return (
-    <div>
-      <nav id="navbar" className="hidden md:block shadow-md outline outline-black/3 rounded-md m-auto p-8">
-        
-        
-          <ul className="flex flex-row items-center place-content-between gap-4 align-item ">
-         <p className="font-bold lowercase">{name}</p>
-          <div className="flex flex-row text-gray-600  gap-4 md:gap-8">
-          {navlist.map((item, index) => (
-            <li key={index} className="">
-              <a href={item.tabhref} className={item.style}>{item.tabname}</a>
-          </li>
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+      {/* Desktop nav */}
+      <nav id="navbar" className="hidden md:flex items-center justify-between max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <span className="font-bold lowercase">{name}</span>
+        <ul className="flex flex-row gap-6 text-sm text-muted-foreground">
+          {navlist.map((item) => (
+            <li key={item.tabname}>
+              <a
+                href={item.tabhref}
+                className="hover:text-foreground transition-colors duration-200"
+              >
+                {item.tabname}
+              </a>
+            </li>
           ))}
-          </div>
         </ul>
-       
-        
       </nav>
 
-      <div className="md:hidden flex flex-row justify-between items-center shadow-md outline outline-black/3 rounded-md m-auto p-8">
-        <p className="font-bold lowercase">{name}</p>
+      {/* Mobile nav */}
+      <div className="md:hidden flex flex-row justify-between items-center max-w-5xl mx-auto px-4 py-4">
+        <span className="font-bold lowercase">{name}</span>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger
-            
-          >
-            <Bars3Icon className="h-5 w-5 inline mr-2" />
+          <SheetTrigger aria-label="Open navigation menu">
+            <Bars3Icon className="h-5 w-5" />
           </SheetTrigger>
-          <SheetContent side="top" className="flex items-center justify-center">
-          <ul>
-          {navlist.map((item, index) => (
-            <li key={index} className="">
-              <a onClick={() => {setIsOpen(false);}} href={item.tabhref} className={item.style}>{item.tabname}</a>
-          </li>
-          ))}
-          </ul>
+          <SheetContent side="top" className="flex items-center justify-center py-8">
+            <ul className="flex flex-col gap-6 text-center text-lg">
+              {navlist.map((item) => (
+                <li key={item.tabname}>
+                  <a
+                    onClick={() => { setIsOpen(false); }}
+                    href={item.tabhref}
+                    className="hover:text-foreground transition-colors duration-200"
+                  >
+                    {item.tabname}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </SheetContent>
         </Sheet>
       </div>
-    </div>
+    </header>
   );
 }
 

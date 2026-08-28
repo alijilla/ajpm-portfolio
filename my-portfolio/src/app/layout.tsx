@@ -8,8 +8,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Your Name | Frontend AI Engineer",
-  description: "Frontend AI Engineer portfolio",
+  title: "Alyssa Jade Merjilla | Frontend Developer",
+  description:
+    "Personal portfolio of Alyssa Jade Merjilla — computer engineering graduate and frontend developer building clear, responsive websites.",
 };
 
 export default function RootLayout({

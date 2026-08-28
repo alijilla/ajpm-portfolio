@@ -1,3 +1,4 @@
+import {PaperClipIcon} from "@heroicons/react/24/outline"
 import {  Card,
   CardHeader,
   CardFooter,
@@ -6,11 +7,13 @@ import {  Card,
   CardDescription,
   CardContent,} from "@/components/ui/card"
 import {Badge} from "@/components/ui/badge"
+import {Button} from "@/components/ui/button"
 interface Projectprops{
     title:string;
     description:string;
     role:string;
     type:string;
+    imagesource:string[],
     stack:string[];
     live_git_url:string;
 }
@@ -28,6 +31,7 @@ export default function Projects(props: Projectprops) {
                            {props.type}
                         </CardDescription>
                     </CardHeader>
+                    
                     <CardContent>
                         {props.description}
                         <br></br><br></br>
@@ -40,7 +44,11 @@ export default function Projects(props: Projectprops) {
                             <Badge key={stack}>{stack}</Badge>
                         ))}
                     </ul>
-                    {props.live_git_url}
+
+                   <Button render={<a href={props.live_git_url}/>}>
+                   <PaperClipIcon className="h-4 w-4 inline mr-2" />
+                   </Button>
+                 
                     </CardFooter>
                 </Card>      
                

@@ -20,7 +20,7 @@ export default function Certificates (props:Certificateprops) {
     return (
         <section className="lowercase">
 
-                <Card>
+                <Card className="hover:shadow-md transition-shadow duration-150" >
                     <CardHeader>
                         <CardTitle>
                         {props.title}
@@ -39,4 +39,3 @@ export default function Certificates (props:Certificateprops) {
         </section>
     );
 }
-
