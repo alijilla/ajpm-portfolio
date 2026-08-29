@@ -5,14 +5,17 @@ import About from "@/components/About";
 import Experience from "@/components/Experience"
 import { ContactForm } from "@/components/Contact";
 import Certificates from "@/components/Certificates";
-import { certificatesData } from "@/data/certificates";
 import { heroData } from "@/data/hero";
 import { aboutData} from "@/data/about";
-import {experienceData} from "@/data/experience"
 import Footer from "@/components/Footer";
 import { FadeIn } from "@/components/ui/fade-in";
+import { supabase } from "@/lib/supabase";
 
-export default function Home() {
+export default async function Home() {
+  // Fetch data directly from Supabase!
+  const { data: experiencesData } = await supabase.from("experiences").select("*");
+  const { data: certificationsData } = await supabase.from("certifications").select("*");
+
   return (
     <main>
       <Navbar name="Alyssa Jade Merjilla"/>
@@ -27,7 +30,7 @@ export default function Home() {
         <section id="about">
           <FadeIn>
             <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight mb-6">about</h2>
-            <About about={heroData.about}/>
+            <About about={aboutData.about}/>
           </FadeIn>
         </section>
 
@@ -35,9 +38,9 @@ export default function Home() {
           <FadeIn>
             <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight mb-6">experience</h2>
             <div className="flex flex-col sm:flex-row gap-4 md:gap-6 overflow-x-auto pb-2">
-              {experienceData.map((company) => (
+              {experiencesData?.map((company) => (
                 <Experience 
-                  key={company.company} 
+                  key={company.id} 
                   company={company.company} 
                   position={company.position} 
                   type={company.type} 
@@ -62,14 +65,14 @@ export default function Home() {
           <FadeIn>
             <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight mb-6">certificates</h2>
             <div className="flex flex-row overflow-x-auto gap-4 md:gap-6 pb-4 snap-x">
-              {certificatesData.map((certificate) => (
+              {certificationsData?.map((certificate) => (
                 <Certificates  
-                  key={certificate.title} 
+                  key={certificate.id} 
                   title={certificate.title} 
                   issuer={certificate.issuer} 
-                  issue_Month={certificate.issue_Month}
-                  issue_Year={certificate.issue_Year}  
-                  credential_url={certificate.credential_url}
+                  issue_Month={certificate.issue_month}
+                  issue_Year={certificate.issue_year}  
+                  credential_url={certificate.credential_url || ""}
                 />
               ))}
             </div>
@@ -88,4 +91,3 @@ export default function Home() {
     </main>
   ); 
 }
-
