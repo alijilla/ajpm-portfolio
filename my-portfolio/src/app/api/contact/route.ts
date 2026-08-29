@@ -28,12 +28,8 @@ export async function POST(request: Request) {
     replyTo: email,
     text: `From: ${name} <${email}>\n\n${message}`,
   });
-    console.log("Key length:", process.env.RESEND_API_KEY?.length);
-console.log("Key starts with:", process.env.RESEND_API_KEY?.slice(0, 5));
-console.log("Key ends with:", JSON.stringify(process.env.RESEND_API_KEY?.slice(-3)));
-console.log("RAW ENV KEY:", JSON.stringify(process.env.RESEND_API_KEY));
-console.log("KEY LENGTH:", process.env.RESEND_API_KEY?.length);
-      if (error) {
+    
+       if (error) {
     return Response.json(
       {
          success: false, message: "Failed to send email",

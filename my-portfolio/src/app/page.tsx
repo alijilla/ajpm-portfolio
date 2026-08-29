@@ -18,14 +18,7 @@ export default function Home() {
       <Navbar name="Alyssa Jade Merjilla"/>
 
       <FadeIn delay={0.1}>
-        <Hero 
-          role={heroData.role}
-          headline={heroData.headline}
-          headline_1={heroData.headline_1}
-          shortbio={heroData.shortbio}
-          cta={heroData.cta}
-          imageSrc={heroData.imageSrc}
-        />
+        <Hero  />
       </FadeIn>
 
       {/* Consistent content container */}

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   Avatar,
   AvatarImage,
@@ -7,48 +10,61 @@ import { EnvelopeIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
-interface HeroProps {
-  role: string;
-  headline: string;
-  headline_1: string;
-  shortbio: string;
-  cta: string;
-  imageSrc: string;
-}
+type Hero = [{
+     role: string, 
+     headline: string, 
+     headline_1: string, 
+     shortbio: string, 
+     cta: string,  
+     image_src: string,
 
-export default function Hero({
-  role,
-  headline,
-  headline_1,
-  shortbio,
-  cta,
-  imageSrc,
-}: HeroProps) {
+}]
+
+export default function Hero( ) {
+
+   const [hero, setHero] = useState<Hero[]>([]);
+          
+          useEffect(() =>{
+              async function fetchHero(){
+                const response = await fetch("/api/hero");
+                const result =  await response.json();
+  
+                setHero(result.data);
+              } 
+              fetchHero();
+            },[]);
   return (
     <section className="lowercase py-16 px-4 sm:px-6 lg:px-8">
       <article className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
+        {
+          hero.map((hero)=>
+          (
+            
+          ))
 
+
+        }
         {/* Left: text content */}
         <div className="flex flex-col gap-4 md:basis-2/3">
           <Badge className="w-fit text-xs rounded-full px-3 py-1">
-            {role}
+            {hero.role}
           </Badge>
 
           <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl">
-            {headline}
+            .select(hero.role)
             <br />
             <span className="text-2xl font-medium text-muted-foreground">
-              {headline_1}
+              .select(hero.role)
             </span>
           </h1>
 
           <p className="text-base text-muted-foreground leading-relaxed max-w-md">
-            {shortbio}
+           .hero.role)
           </p>
 
           {/* cta prop is now rendered */}
           <p className="text-sm text-muted-foreground italic">
-            {cta}
+            .select(hero.role)
           </p>
 
           <div className="flex flex-row gap-3 flex-wrap mt-2">
@@ -67,7 +83,7 @@ export default function Hero({
         <div className="shrink-0">
           <Avatar className="shadow-lg w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
             <AvatarImage
-              src={imageSrc}
+              src={.select(hero.image_src)}
               className="w-full h-full object-cover"
               alt="Alyssa Jade Merjilla"
             />

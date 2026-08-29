@@ -1,4 +1,6 @@
-import { projectsData } from "@/data/projects";
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Dialog,
@@ -17,6 +19,18 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+
+type ProjectCard = {
+  id: string;
+  title: string, 
+  description: string, 
+ imagesource: string[], 
+  role: string, 
+ type: string, 
+  stack: string[], 
+  live_git_url: string, 
+};
+
 // Shown when a project has no screenshot yet
 function ImagePlaceholder({ title }: { title: string }) {
   return (
@@ -27,10 +41,26 @@ function ImagePlaceholder({ title }: { title: string }) {
 }
 
 export default function ProjectCard() {
+        const [projects, setProjects] = useState<ProjectCard[]>([]);
+        
+        useEffect(() =>{
+            async function fetchProjects(){
+              const response = await fetch("/api/projects");
+              const result =  await response.json();
+
+              setProjects(result.data);
+            } 
+            fetchProjects();
+          },[]);
+
   return (
+
+
+
+
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-      {projectsData.map((project) => (
-        <Dialog key={project.title}>
+      {projects.map((project) => (
+        <Dialog key={project.id}>
 
           {/* Card trigger — clicking opens the dialog */}
           <DialogTrigger nativeButton={false} render={<div role="button" tabIndex={0} className="text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl group cursor-pointer h-full" />}>

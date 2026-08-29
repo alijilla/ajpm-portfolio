@@ -1,3 +1,6 @@
+"use client"
+
+import {useState, useEffect} from "react";
 import {
   Card,
   CardHeader,
@@ -19,7 +22,18 @@ interface ExperienceProp {
 
 export default function Experience(props: ExperienceProp) {
   const isCurrent = props.end_date === "Present";
-
+   const [experiences, setExperiences] = useState<ExperienceProp[]>([]);
+          
+          useEffect(() =>{
+              async function fetchExperiences(){
+                const response = await fetch("/api/projects");
+                const result =  await response.json();
+  
+                setExperiences(result.data);
+              } 
+              fetchExperiences();
+            },[]);
+  
   return (
     <article className="flex-1 min-w-[260px]">
       <Card className="lowercase h-full flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
