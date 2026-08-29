@@ -1,2 +1,0 @@
-export const aboutData = {
-    about:"BS Computer Engineering graduate from Southern Luzon State University. I've built most of my frontend skills through self-directed practice — courses, personal projects, hands-on experimentation. Currently frontend AI intern at Flyrank, building AI-assisted web features."}

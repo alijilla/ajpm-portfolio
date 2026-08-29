@@ -5,8 +5,6 @@ import About from "@/components/About";
 import Experience from "@/components/Experience"
 import { ContactForm } from "@/components/Contact";
 import Certificates from "@/components/Certificates";
-import { heroData } from "@/data/hero";
-import { aboutData} from "@/data/about";
 import Footer from "@/components/Footer";
 import { FadeIn } from "@/components/ui/fade-in";
 import { supabase } from "@/lib/supabase";
@@ -15,6 +13,8 @@ export default async function Home() {
   // Fetch data directly from Supabase!
   const { data: experiencesData } = await supabase.from("experiences").select("*");
   const { data: certificationsData } = await supabase.from("certifications").select("*");
+  // Fetch hero data to pass to the About component (.single() returns one object instead of an array)
+  const { data: hero } = await supabase.from("hero").select("*").single();
 
   return (
     <main>
@@ -30,7 +30,7 @@ export default async function Home() {
         <section id="about">
           <FadeIn>
             <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight mb-6">about</h2>
-            <About about={aboutData.about}/>
+            <About about={hero?.about || "About section coming soon."}/>
           </FadeIn>
         </section>
 
@@ -81,7 +81,7 @@ export default async function Home() {
 
         <section id="contact">
           <FadeIn>
-            <ContactForm />
+            <ContactForm cta={hero?.cta || "open to junior frontend / web developer roles."} />
           </FadeIn>
         </section>
 

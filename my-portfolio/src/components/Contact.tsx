@@ -6,7 +6,6 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { SiGithub, SiInstagram } from "react-icons/si";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { SlSocialFacebook } from "react-icons/sl";
-import { heroData } from "@/data/hero";
 import { useForm } from "react-hook-form"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -39,7 +38,7 @@ function MessageSentAlert() {
   );
 }
 
-export function ContactForm() {
+export function ContactForm({ cta }: { cta?: string }) {
   const [messageSent, setMessageSent] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -83,7 +82,7 @@ export function ContactForm() {
       <div className="flex flex-col gap-6 md:basis-1/2">
         <div className="space-y-4">
           <p className="text-base text-muted-foreground leading-relaxed lowercase">
-            {heroData.cta}
+            {cta}
           </p>
         </div>
 
