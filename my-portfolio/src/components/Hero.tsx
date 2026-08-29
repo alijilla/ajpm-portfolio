@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 import {
   Avatar,
   AvatarImage,
@@ -10,40 +8,24 @@ import { EnvelopeIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
-type Hero = [{
-     role: string, 
-     headline: string, 
-     headline_1: string, 
-     shortbio: string, 
-     cta: string,  
-     image_src: string,
+export default async function Hero() {
+  // 1. Fetch data directly from Supabase on the server!
+  // .single() tells Supabase we only expect ONE row, so it returns an object instead of an array.
+  const { data: hero, error } = await supabase.from("hero").select("*").single();
 
-}]
+  // If there's an error or no data, you can show a fallback
+  if (error || !hero) {
+    return (
+      <section className="py-16 px-4 text-center">
+        <p className="text-muted-foreground">failed to load hero data.</p>
+      </section>
+    );
+  }
 
-export default function Hero( ) {
-
-   const [hero, setHero] = useState<Hero[]>([]);
-          
-          useEffect(() =>{
-              async function fetchHero(){
-                const response = await fetch("/api/hero");
-                const result =  await response.json();
-  
-                setHero(result.data);
-              } 
-              fetchHero();
-            },[]);
   return (
     <section className="lowercase py-16 px-4 sm:px-6 lg:px-8">
       <article className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
-        {
-          hero.map((hero)=>
-          (
-            
-          ))
-
-
-        }
+        
         {/* Left: text content */}
         <div className="flex flex-col gap-4 md:basis-2/3">
           <Badge className="w-fit text-xs rounded-full px-3 py-1">
@@ -51,20 +33,19 @@ export default function Hero( ) {
           </Badge>
 
           <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl">
-            .select(hero.role)
+            {hero.headline}
             <br />
             <span className="text-2xl font-medium text-muted-foreground">
-              .select(hero.role)
+              {hero.headline_1}
             </span>
           </h1>
 
           <p className="text-base text-muted-foreground leading-relaxed max-w-md">
-           .hero.role)
+            {hero.shortbio}
           </p>
 
-          {/* cta prop is now rendered */}
           <p className="text-sm text-muted-foreground italic">
-            .select(hero.role)
+            {hero.cta}
           </p>
 
           <div className="flex flex-row gap-3 flex-wrap mt-2">
@@ -83,7 +64,7 @@ export default function Hero( ) {
         <div className="shrink-0">
           <Avatar className="shadow-lg w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
             <AvatarImage
-              src={.select(hero.image_src)}
+              src={hero.image_src}
               className="w-full h-full object-cover"
               alt="Alyssa Jade Merjilla"
             />
