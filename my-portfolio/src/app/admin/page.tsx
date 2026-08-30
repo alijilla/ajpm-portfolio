@@ -278,7 +278,7 @@ export default function AdminPage() {
                       <label className="text-sm font-medium">about section text</label>
                       <Input {...register("about")} />
                     </div>
-                    <Button className="mt-4" disabled={isSaving}>
+                    <Button type="submit" className="mt-4" disabled={isSaving}>
                       {isSaving ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : null}
                       {isSaving ? "saving..." : "update hero & about"}
                     </Button>
@@ -289,10 +289,124 @@ export default function AdminPage() {
             </Card>
           </TabsContent>
 
-          {/* OTHER TABS OMITTED FOR BREVITY AS YOU WORK ON THE AI FEATURE */}
-          <TabsContent value="experience"><Card><CardContent className="p-8 text-center text-muted-foreground">Work in progress...</CardContent></Card></TabsContent>
-          <TabsContent value="projects"><Card><CardContent className="p-8 text-center text-muted-foreground">Work in progress...</CardContent></Card></TabsContent>
-          <TabsContent value="certificates"><Card><CardContent className="p-8 text-center text-muted-foreground">Work in progress...</CardContent></Card></TabsContent>
+          {/* 2. EXPERIENCE TAB */}
+          <TabsContent value="experience" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>add new experience</CardTitle>
+                <CardDescription>fill out the form below to add a new role to your timeline.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {/* Add Form */}
+                <form className="grid gap-4" onSubmit={(e) => { e.preventDefault(); handleAddExp(); }}>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid gap-2"><label className="text-sm font-medium">company</label><Input placeholder="e.g. FlyRank" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">position</label><Input placeholder="e.g. AI Engineer" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">type</label><Input placeholder="e.g. Full-time, Internship" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">tech stack</label><Input placeholder="React, Next.js, Tailwind (comma separated)" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">start date</label><Input type="month" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">end date</label><Input type="month" placeholder="Leave blank if present" /></div>
+                  </div>
+                  <div className="grid gap-2"><label className="text-sm font-medium">description</label><Textarea placeholder="What did you do there?" /></div>
+                  <Button type="submit" className="w-fit"><Plus className="h-4 w-4 mr-2" /> add experience</Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* List Existing Experiences */}
+            <div className="grid gap-4">
+              <h3 className="text-lg font-semibold tracking-tight mt-4">existing experiences</h3>
+              {exp?.map((item, i) => (
+                <Card key={i} className="flex flex-col md:flex-row justify-between items-start md:items-center p-4">
+                  <div>
+                    <h4 className="font-medium">{item.position} <span className="text-muted-foreground font-normal">at {item.company}</span></h4>
+                    <p className="text-sm text-muted-foreground">{item.start_date} - {item.end_date || "Present"}</p>
+                  </div>
+                  <div className="flex gap-2 mt-4 md:mt-0">
+                    <Button variant="outline" size="sm" onClick={() => handleUpdateExp()}><Pencil className="h-4 w-4 mr-2" /> edit</Button>
+                    <Button variant="destructive" size="sm" onClick={() => handleDeleteExp()}><Trash2 className="h-4 w-4 mr-2" /> delete</Button>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* 3. PROJECTS TAB */}
+          <TabsContent value="projects" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>add new project</CardTitle>
+                <CardDescription>showcase your latest work and case studies.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form className="grid gap-4" onSubmit={(e) => { e.preventDefault(); handleAddProj(); }}>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid gap-2"><label className="text-sm font-medium">project title</label><Input placeholder="e.g. AI Portfolio" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">role</label><Input placeholder="e.g. Lead Developer" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">project type</label><Input placeholder="e.g. Web App, Case Study" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">live / github url</label><Input placeholder="https://..." /></div>
+                    <div className="grid gap-2 md:col-span-2"><label className="text-sm font-medium">tech stack</label><Input placeholder="React, Firebase, Zod (comma separated)" /></div>
+                  </div>
+                  <div className="grid gap-2"><label className="text-sm font-medium">description</label><Textarea placeholder="Describe the project and your impact..." /></div>
+                  <Button type="submit" className="w-fit"><Plus className="h-4 w-4 mr-2" /> add project</Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* List Existing Projects */}
+            <div className="grid gap-4 md:grid-cols-2">
+              {projects?.map((item, i) => (
+                <Card key={i} className="flex flex-col justify-between p-4 space-y-4">
+                  <div>
+                    <h4 className="font-medium">{item.title}</h4>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="flex-1" onClick={() => handleUpdateProj()}><Pencil className="h-4 w-4 mr-2" /> edit</Button>
+                    <Button variant="destructive" size="sm" className="flex-1" onClick={() => handleDeleteProj()}><Trash2 className="h-4 w-4 mr-2" /> delete</Button>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* 4. CERTIFICATES TAB */}
+          <TabsContent value="certificates" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>add new certificate</CardTitle>
+                <CardDescription>add a new certification or course completion.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form className="grid gap-4" onSubmit={(e) => { e.preventDefault(); handleAddCert(); }}>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid gap-2 md:col-span-2"><label className="text-sm font-medium">certificate title</label><Input placeholder="e.g. Google UX Design Professional Certificate" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">issuing organization</label><Input placeholder="e.g. Coursera" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">credential url</label><Input placeholder="https://..." /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">issue month</label><Input placeholder="e.g. August" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">issue year</label><Input type="number" placeholder="2026" /></div>
+                  </div>
+                  <Button type="submit" className="w-fit"><Plus className="h-4 w-4 mr-2" /> add certificate</Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* List Existing Certificates */}
+            <div className="grid gap-4 md:grid-cols-2">
+              {cert?.map((item, i) => (
+                <Card key={i} className="flex flex-col justify-between p-4 space-y-4">
+                  <div>
+                    <h4 className="font-medium">{item.title}</h4>
+                    <p className="text-sm text-muted-foreground">{item.issuer} ({item.issue_month} {item.issue_year})</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="flex-1" onClick={() => handleUpdateCert()}><Pencil className="h-4 w-4 mr-2" /> edit</Button>
+                    <Button variant="destructive" size="sm" className="flex-1" onClick={() => handleDeleteCert()}><Trash2 className="h-4 w-4 mr-2" /> delete</Button>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
 
         </Tabs>
       </div>
