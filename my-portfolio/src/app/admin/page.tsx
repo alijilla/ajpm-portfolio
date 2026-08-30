@@ -3,66 +3,217 @@
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form"
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { formSchema } from "@/lib/schemas/contact";
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+
 import { Plus, Trash2, Pencil, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { heroSchemaUpdate } from "@/lib/schemas/hero";
+
+type Hero = {
+     role: string; 
+     headline: string;
+     headline_1: string;
+     shortbio: string;
+     cta: string ;
+     image_src: string ;
+     about: string;
+}
+
+interface Experience {
+  company: string;
+  position: string;
+  type: string;
+  start_date: string;
+  end_date: string;
+  description: string;
+  stack: string[];
+}
+
+interface Certificate {
+  title: string;
+  issuer: string;
+  issue_month: string;
+  issue_year: number;
+  credential_url: string;
+}
+
+type ProjectCard = {
+  id: string;
+  title: string, 
+  description: string, 
+ imagesource: string[], 
+  role: string, 
+ type: string, 
+  stack: string[], 
+  live_git_url: string, 
+};
+
+type Skills = {
+  id: string;
+  category: string;
+  name: string;
+};
 
 export default function AdminPage() {
+  
+ 
   // Hero State
-  const [heroId, setHeroId] = useState("");
-  const [role, setRole] = useState("");
-  const [headline, setHeadline] = useState("");
-  const [headline1, setHeadline1] = useState("");
-  const [shortbio, setShortbio] = useState("");
-  const [cta, setCta] = useState("");
-  const [about, setAbout] = useState("");
+  const [hero, setHero] = useState<Hero | null>(null);
+
+  //Experience Stage
+   const [exp, setExp] = useState<Experience[] | null>(null);
+  
+  //Project Stage
+   const [projects, setProj] = useState<ProjectCard[]>([]);
+  
+   //Skill stage 
+  const [skills, setSkill] = useState<Skills[]>([]);
+  
+  //Certificate stage
+  const [cert, setCert] = useState<Certificate[] | null>(null);
+  
+  //isLoading isSaving
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Fetch Hero Data on Load
-  useEffect(() => {
-    async function loadData() {
-      const { data, error } = await supabase.from("hero").select("*").single();
-      if (data) {
-        setHeroId(data.id);
-        setRole(data.role || "");
-        setHeadline(data.headline || "");
-        setHeadline1(data.headline_1 || "");
-        setShortbio(data.shortbio || "");
-        setCta(data.cta || "");
-        setAbout(data.about || "");
-      }
-      setIsLoading(false);
-    }
-    loadData();
-  }, []);
+     const {
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors},
+    } = useForm<z.infer<typeof heroSchemaUpdate>>({
+      resolver: zodResolver(heroSchemaUpdate),
+    })
 
-  // Update Hero Function
-  async function handleUpdateHero() {
-    setIsSaving(true);
-    const { error } = await supabase
-      .from("hero")
-      .update({
-        role,
-        headline,
-        headline_1: headline1,
-        shortbio,
-        cta,
-        about
-      })
-      .eq("id", heroId);
-      
-    setIsSaving(false);
-    
-    if (error) {
-      alert("Error saving: " + error.message + " (Make sure you enabled UPDATE policies in Supabase!)");
-    } else {
-      alert("Successfully updated! Go check your live site!");
+
+
+  //FetchAllData
+   useEffect(() => {
+    async function fetchData(){
+      try {
+        const [resHero, resSkill, resProj, resExp, resCert ] = await Promise.all ([
+          fetch("/api/hero"),
+          fetch("/api/skills"),
+          fetch("/api/projects"),    // Fixed order
+          fetch("/api/experiences"), // Fixed order
+          fetch("/api/certifications"),
+        ]);
+        
+        const [dataHero, dataSkill, dataProj, dataExp, dataCert] = await Promise.all([
+          resHero.json(),
+          resSkill.json(),
+          resProj.json(),
+          resExp.json(),
+          resCert.json()
+        ]);
+       
+        setHero(dataHero.data[0]);
+
+        reset(dataHero.data[0]); 
+        setSkill(dataSkill.data || []);
+        setProj(dataProj.data || []); // Fixed: setProj instead of setExp
+        setExp(dataExp.data || []);
+        setCert(dataCert.data || []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
+    fetchData();
+  }, [])
+  // Update Hero Function
+
+
+
+  async function handleUpdateHero(herovalue: z.infer<typeof heroSchemaUpdate>){
+  
+          try {
+         
+            const res = await fetch("/api/hero", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(herovalue),
+          });
+            const heroUpdate = await res.json();
+             setHero(heroUpdate.data);
+             alert("Updated Succesfully")
+          } catch (error){
+             console.error("Failed to update:", error);
+          }
+
+          
   }
+
+  
+  
+  //Update Experience 
+  async function handleUpdateExp() {
+
+
+  }
+  //Delete Experience
+    async function handleDeleteExp() {
+
+    }
+  //Add Experience
+    async function handleAddExp() {
+
+    }
+
+ 
+  //Update Project 
+  async function handleUpdateProj() {
+
+  }
+  //Delete Project
+  async function handleDeleteProj() {
+
+  }
+  //Add Project
+   async function handleAddProj() {
+
+   }
+  
+
+  //Update Certificate
+  async function handleUpdateCert() {
+
+  }
+  //Delete Certificate
+  async function handleDeleteCert() {
+
+  }
+  //Add Certificate
+   async function handleAddCert() {
+
+   }
+
+
+  //Update Skills
+  async function handleUpdateSkill() {
+
+  }
+  
+    //Delete Skills
+  async function handleDeleteSkill() {
+
+  }
+
+   //Add Skills
+   async function handleAddSkill(){
+
+   }
+
+
+
+ 
   
   return (
     <main className="min-h-screen bg-muted/30 p-4 md:p-10 lowercase">
@@ -102,34 +253,36 @@ export default function AdminPage() {
                   <div className="flex justify-center p-8"><Loader2 className="animate-spin h-6 w-6 text-muted-foreground" /></div>
                 ) : (
                   <>
+                  <form onSubmit={handleSubmit(handleUpdateHero)}>
                     <div className="grid gap-2">
                       <label className="text-sm font-medium">role badge</label>
-                      <Input value={role} onChange={e => setRole(e.target.value)} />
+                       <Input {...register("role")} />
                     </div>
                     <div className="grid gap-2">
                       <label className="text-sm font-medium">headline</label>
-                      <Input value={headline} onChange={e => setHeadline(e.target.value)} />
+                      <Input {...register("headline")} />
                     </div>
                     <div className="grid gap-2">
                       <label className="text-sm font-medium">sub-headline</label>
-                      <Input value={headline1} onChange={e => setHeadline1(e.target.value)} />
+                      <Input {...register("headline_1")} />
                     </div>
                     <div className="grid gap-2">
                       <label className="text-sm font-medium">short bio</label>
-                      <Textarea value={shortbio} onChange={e => setShortbio(e.target.value)} rows={3} />
+                      <Input {...register("shortbio")} />
                     </div>
                     <div className="grid gap-2">
                       <label className="text-sm font-medium">call to action text</label>
-                      <Input value={cta} onChange={e => setCta(e.target.value)} />
+                      <Input {...register("cta")} />
                     </div>
                     <div className="grid gap-2 pt-4 border-t">
                       <label className="text-sm font-medium">about section text</label>
-                      <Textarea value={about} onChange={e => setAbout(e.target.value)} rows={5} />
+                      <Input {...register("about")} />
                     </div>
-                    <Button className="mt-4" onClick={handleUpdateHero} disabled={isSaving}>
+                    <Button className="mt-4" disabled={isSaving}>
                       {isSaving ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : null}
                       {isSaving ? "saving..." : "update hero & about"}
                     </Button>
+                    </form>
                   </>
                 )}
               </CardContent>
