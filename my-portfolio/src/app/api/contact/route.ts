@@ -21,6 +21,7 @@ export async function POST(request: Request) {
 
   const { name, email, message } = result.data;
 
+ 
   const { data, error } = await resend.emails.send({
     from: "onboarding@resend.dev",       // Resend's sandbox sender (Option A)
     to: "merjillajadealyssa@gmail.com", // must match the email you signed up with, while in sandbox mode

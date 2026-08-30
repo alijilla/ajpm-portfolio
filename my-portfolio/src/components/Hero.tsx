@@ -1,4 +1,7 @@
-import { supabase } from "@/lib/supabase";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 import {
   Avatar,
   AvatarImage,
@@ -8,25 +11,57 @@ import { EnvelopeIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
-export default async function Hero() {
-  // 1. Fetch data directly from Supabase on the server!
-  // .single() tells Supabase we only expect ONE row, so it returns an object instead of an array.
-  const { data: hero, error } = await supabase.from("hero").select("*").single();
+type Hero = {
+     role: string; 
+     headline: string;
+     headline_1: string;
+     shortbio: string;
+     cta: string ;
+     image_src: string ;
+     about: string;
+}
+export default function Hero() {
+  const [hero, setHero] = useState<Hero | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  /*const [role, setRole] = useState("");
+  const [headline, setHeadline] = useState("");
+  const [headline_1, setHeadline_1] = useState("");
+  const [shortbio, setShortbio] = useState("");
+  const [cta, setCta] = useState("");
+  const [image_src, setImage_src] = useState("");
+  const [isLoading, setIsLoading] = useState(true);*/
 
-  // If there's an error or no data, you can show a fallback
-  if (error || !hero) {
-    return (
-      <section className="py-16 px-4 text-center">
-        <p className="text-muted-foreground">failed to load hero data.</p>
-      </section>
-    );
-  }
+  useEffect(() => {
 
+    async function fetchHero(){
+
+      const response = await fetch("/api/hero");
+      const result = await response.json();
+      setHero(result.data[0]);
+
+       setIsLoading(false);
+      
+     /* if(result){
+      const hero = result.data[0];
+      setRole(hero.role);
+      setHeadline(hero.headline);
+      setHeadline_1(hero.headline_1);
+      setShortbio(hero.shortbio);
+      setCta(hero.cta);
+      setImage_src(hero.image_src);
+      }*/
+
+    }
+    fetchHero();
+  },[])
+     
   return (
     <section className="lowercase py-16 px-4 sm:px-6 lg:px-8">
       <article className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
-        
-        {/* Left: text content */}
+      {isLoading ? (
+        <div className="flex justify-center p-8"><Loader2 className="animate-spin h-6 w-6 text-muted-foreground" /></div>
+      ) : hero ? (
+        <>
         <div className="flex flex-col gap-4 md:basis-2/3">
           <Badge className="w-fit text-xs rounded-full px-3 py-1">
             {hero.role}
@@ -60,7 +95,7 @@ export default async function Hero() {
           </div>
         </div>
 
-        {/* Right: avatar */}
+        
         <div className="shrink-0">
           <Avatar className="shadow-lg w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
             <AvatarImage
@@ -72,6 +107,9 @@ export default async function Hero() {
           </Avatar>
         </div>
 
+       </>
+      ) : null}
+        
       </article>
     </section>
   );

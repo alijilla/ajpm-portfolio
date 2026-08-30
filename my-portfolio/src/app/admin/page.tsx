@@ -85,9 +85,9 @@ export default function AdminPage() {
         <Tabs defaultValue="hero">
           <TabsList className="mb-6 flex-wrap h-auto">
             <TabsTrigger value="hero">hero & about</TabsTrigger>
-            <TabsTrigger value="experience">experience (coming soon)</TabsTrigger>
-            <TabsTrigger value="projects">projects (coming soon)</TabsTrigger>
-            <TabsTrigger value="certificates">certificates (coming soon)</TabsTrigger>
+            <TabsTrigger value="experience">experience</TabsTrigger>
+            <TabsTrigger value="projects">projects</TabsTrigger>
+            <TabsTrigger value="certificates">certificates</TabsTrigger>
           </TabsList>
 
           {/* 1. HERO TAB */}

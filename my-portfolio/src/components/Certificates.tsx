@@ -10,8 +10,8 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 interface Certificateprops {
   title: string;
   issuer: string;
-  issue_Month: string;
-  issue_Year: number;
+  issue_month: string;
+  issue_year: number;
   credential_url: string;
 }
 
@@ -27,7 +27,7 @@ export default function Certificates(props: Certificateprops) {
           <div className="mt-2 flex flex-col gap-1">
             <p className="text-sm font-medium text-foreground">{props.issuer}</p>
             <p className="text-xs text-muted-foreground italic">
-              {props.issue_Month} {props.issue_Year}
+              {props.issue_month} {props.issue_year}
             </p>
           </div>
         </CardHeader>
