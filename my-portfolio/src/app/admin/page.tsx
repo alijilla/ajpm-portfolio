@@ -239,6 +239,7 @@ export default function AdminPage() {
             <TabsTrigger value="experience">experience</TabsTrigger>
             <TabsTrigger value="projects">projects</TabsTrigger>
             <TabsTrigger value="certificates">certificates</TabsTrigger>
+            <TabsTrigger value="skills">skills</TabsTrigger>
           </TabsList>
 
           {/* 1. HERO TAB */}
@@ -403,6 +404,46 @@ export default function AdminPage() {
                     <Button variant="outline" size="sm" className="flex-1" onClick={() => handleUpdateCert()}><Pencil className="h-4 w-4 mr-2" /> edit</Button>
                     <Button variant="destructive" size="sm" className="flex-1" onClick={() => handleDeleteCert()}><Trash2 className="h-4 w-4 mr-2" /> delete</Button>
                   </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* 5. SKILLS TAB */}
+          <TabsContent value="skills" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>add new skill</CardTitle>
+                <CardDescription>add a new technology or tool to your stack.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form className="grid gap-4" onSubmit={(e) => { e.preventDefault(); handleAddSkill(); }}>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                      <label className="text-sm font-medium">skill category</label>
+                      <Input placeholder="e.g. Frontend, Backend, Tools" />
+                    </div>
+                    <div className="grid gap-2">
+                      <label className="text-sm font-medium">skill name</label>
+                      <Input placeholder="e.g. React, Next.js, Figma" />
+                    </div>
+                  </div>
+                  <Button type="submit" className="w-fit"><Plus className="h-4 w-4 mr-2" /> add skill</Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* List Existing Skills */}
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {skills?.map((item, i) => (
+                <Card key={i} className="flex justify-between items-center p-4">
+                  <div>
+                    <h4 className="font-medium text-sm">{item.name}</h4>
+                    <p className="text-xs text-muted-foreground">{item.category}</p>
+                  </div>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:bg-destructive/10" onClick={() => handleDeleteSkill()}>
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </Card>
               ))}
             </div>
