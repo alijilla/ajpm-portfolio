@@ -152,8 +152,35 @@ export default function AdminPage() {
       setIsAuthenticated(true);
     }
   };
+  const [isUploading, setIsUploading] = useState(false);
 
-  
+  const uploadImageToSupabase = async (file: File) => {
+    setIsUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `uploads/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('portfolio-images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data } = supabase.storage
+        .from('portfolio-images')
+        .getPublicUrl(filePath);
+
+      return data.publicUrl;
+    } catch (error: any) {
+      alert("Upload failed. Make sure you created a public 'portfolio-images' storage bucket. Error: " + error.message);
+      return null;
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   // --- 1. HERO CRUD ---
   async function handleUpdateHero(herovalue: z.infer<typeof heroSchemaUpdate>) {
@@ -402,6 +429,24 @@ export default function AdminPage() {
                       <label className="text-sm font-medium">call to action text</label>
                       <Input {...heroForm.register("cta")} />
                     </div>
+                    <div className="grid gap-2 mt-4">
+                      <label className="text-sm font-medium">hero image (upload or paste url)</label>
+                      <div className="flex gap-2 items-center">
+                        <Input {...heroForm.register("image_src")} placeholder="https://..." className="flex-1" />
+                        <Input 
+                          type="file" 
+                          accept="image/*" 
+                          className="w-auto cursor-pointer"
+                          disabled={isUploading}
+                          onChange={async (e) => {
+                            if (e.target.files && e.target.files[0]) {
+                              const url = await uploadImageToSupabase(e.target.files[0]);
+                              if (url) heroForm.setValue("image_src", url);
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
                     <div className="grid gap-2 pt-4 mt-4 border-t">
                       <label className="text-sm font-medium">about section text</label>
                       <Input {...heroForm.register("about")} />
@@ -487,7 +532,24 @@ export default function AdminPage() {
                     <div className="grid gap-2"><label className="text-sm font-medium">role</label><Input {...projForm.register("role")} placeholder="e.g. Lead Developer" required /></div>
                     <div className="grid gap-2"><label className="text-sm font-medium">project type</label><Input {...projForm.register("type")} placeholder="e.g. Web App, Case Study" /></div>
                     <div className="grid gap-2"><label className="text-sm font-medium">live / github url</label><Input {...projForm.register("live_git_url")} placeholder="https://..." /></div>
-                    <div className="grid gap-2"><label className="text-sm font-medium">image url</label><Input {...projForm.register("imagesource")} placeholder="/img/project.png" /></div>
+                    <div className="grid gap-2">
+                      <label className="text-sm font-medium">project image (upload or paste url)</label>
+                      <div className="flex gap-2 items-center">
+                        <Input {...projForm.register("imagesource")} placeholder="https://..." className="flex-1" />
+                        <Input 
+                          type="file" 
+                          accept="image/*" 
+                          className="w-auto cursor-pointer"
+                          disabled={isUploading}
+                          onChange={async (e) => {
+                            if (e.target.files && e.target.files[0]) {
+                              const url = await uploadImageToSupabase(e.target.files[0]);
+                              if (url) projForm.setValue("imagesource", url);
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
                     <div className="grid gap-2"><label className="text-sm font-medium">tech stack</label><Input {...projForm.register("stack")} placeholder="React, Firebase (comma separated)" /></div>
                   </div>
                   <div className="grid gap-2"><label className="text-sm font-medium">description</label><Textarea {...projForm.register("description")} placeholder="Describe the project and your impact..." required /></div>
