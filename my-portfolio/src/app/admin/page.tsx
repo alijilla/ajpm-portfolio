@@ -98,8 +98,9 @@ export default function AdminPage() {
       return;
     }
     
+   
     async function fetchData() {
-      setIsLoading(true);
+       setIsLoading(true);
       try {
         const [resHero, resSkill, resProj, resExp, resCert] = await Promise.all([
           fetch("/api/hero"),

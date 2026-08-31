@@ -42,22 +42,38 @@ function ImagePlaceholder({ title }: { title: string }) {
 
 export default function ProjectCard() {
         const [projects, setProjects] = useState<ProjectCard[]>([]);
+        const [isLoading, setIsLoading] = useState(true);
         
         useEffect(() =>{
             async function fetchProjects(){
-              const response = await fetch("/api/projects");
-              const result =  await response.json();
-
-              setProjects(result.data);
+              try {
+                const response = await fetch("/api/projects");
+                const result =  await response.json();
+                setProjects(result.data || []);
+              } finally {
+                setIsLoading(false);
+              }
             } 
             fetchProjects();
           },[]);
 
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="flex flex-col gap-2 rounded-xl overflow-hidden border p-0">
+            <div className="w-full h-40 bg-muted animate-pulse" />
+            <div className="p-4 space-y-2">
+              <div className="h-4 w-3/4 bg-muted animate-pulse rounded" />
+              <div className="h-3 w-1/2 bg-muted animate-pulse rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
-
-
-
-
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {projects.map((project) => (
         <Dialog key={project.id}>

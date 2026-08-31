@@ -58,22 +58,37 @@ export default function Hero() {
   return (
     <section className="lowercase py-16 px-4 sm:px-6 lg:px-8">
       <article className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
-      {hero ? (
+      {isLoading ? (
+        <>
+          <div className="flex flex-col gap-4 md:basis-2/3 w-full">
+            <div className="h-6 w-24 bg-muted animate-pulse rounded-full" />
+            <div className="h-16 md:h-20 w-full max-w-lg bg-muted animate-pulse rounded-md" />
+            <div className="h-20 w-full max-w-md bg-muted animate-pulse rounded-md" />
+            <div className="h-4 w-48 bg-muted animate-pulse rounded-md" />
+            <div className="flex flex-row gap-3 flex-wrap mt-2">
+              <div className="h-10 w-28 bg-muted animate-pulse rounded-md" />
+              <div className="h-10 w-28 bg-muted animate-pulse rounded-md" />
+            </div>
+          </div>
+          <div className="shrink-0">
+            <div className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-muted animate-pulse rounded-full shadow-lg" />
+          </div>
+        </>
+      ) : hero ? (
         <>
         <div className="flex flex-col gap-4 md:basis-2/3">
           <Badge className="w-fit text-xs rounded-full px-3 py-1">
             {hero.role}
           </Badge>
 
-          <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl">
-            {hero.headline}
-            <br />
-            <span className="text-2xl font-medium text-muted-foreground">
+          <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
+            {hero.headline}{" "}
+            <span className="text-muted-foreground">
               {hero.headline_1}
             </span>
           </h1>
 
-          <p className="text-base text-muted-foreground leading-relaxed max-w-md">
+          <p className="text-base text-muted-foreground leading-relaxed max-w-md mt-4">
             {hero.shortbio}
           </p>
 

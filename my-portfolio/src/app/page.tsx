@@ -112,19 +112,33 @@ export default function Home() {
           <FadeIn>
             <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight mb-6">experience</h2>
             <div className="flex flex-col sm:flex-row gap-4 md:gap-6 overflow-x-auto pb-2">
-              {exp?.map((company) => (
-                <Experience 
-                  key={company.id} 
-                  company={company.company} 
-                  position={company.position} 
-                  type={company.type} 
-                  start_date={company.start_date} 
-                  end_date={company.end_date}  
-                  description={company.description} 
-                  // Fix: stack is already an array, so we don't call .split(",")
-                  stack={Array.isArray(company.stack) ? company.stack : []}
-                />
-              ))}
+              {exp === null ? (
+                <>
+                  <div className="flex flex-col gap-2 min-w-[280px] p-4 border rounded-xl animate-pulse bg-muted/20">
+                    <div className="h-5 w-32 bg-muted rounded" />
+                    <div className="h-4 w-24 bg-muted rounded" />
+                    <div className="h-3 w-40 bg-muted rounded mt-2" />
+                  </div>
+                  <div className="flex flex-col gap-2 min-w-[280px] p-4 border rounded-xl animate-pulse bg-muted/20 hidden sm:flex">
+                    <div className="h-5 w-32 bg-muted rounded" />
+                    <div className="h-4 w-24 bg-muted rounded" />
+                    <div className="h-3 w-40 bg-muted rounded mt-2" />
+                  </div>
+                </>
+              ) : (
+                exp.map((company) => (
+                  <Experience 
+                    key={company.id} 
+                    company={company.company} 
+                    position={company.position} 
+                    type={company.type} 
+                    start_date={company.start_date} 
+                    end_date={company.end_date}  
+                    description={company.description} 
+                    stack={Array.isArray(company.stack) ? company.stack : []}
+                  />
+                ))
+              )}
             </div>
           </FadeIn>
         </section>
@@ -140,16 +154,29 @@ export default function Home() {
           <FadeIn>
             <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight mb-6">certificates</h2>
             <div className="flex flex-row overflow-x-auto gap-4 md:gap-6 pb-4 snap-x">
-          {cert?.map((certificate) => (
-            <Certificates  
-              key={certificate.id} 
-              title={certificate.title} 
-              issuer={certificate.issuer} 
-              issue_month={certificate.issue_month}
-              issue_year={Number(certificate.issue_year) || 0}
-              credential_url={certificate.credential_url || ""}
-            />
-          ))}
+              {cert === null ? (
+                <>
+                  <div className="min-w-[240px] h-32 border rounded-xl animate-pulse bg-muted/20 p-4 flex flex-col justify-center">
+                    <div className="h-5 w-3/4 bg-muted rounded mb-2" />
+                    <div className="h-4 w-1/2 bg-muted rounded" />
+                  </div>
+                  <div className="min-w-[240px] h-32 border rounded-xl animate-pulse bg-muted/20 p-4 flex-col justify-center hidden sm:flex">
+                    <div className="h-5 w-3/4 bg-muted rounded mb-2" />
+                    <div className="h-4 w-1/2 bg-muted rounded" />
+                  </div>
+                </>
+              ) : (
+                cert.map((certificate) => (
+                  <Certificates  
+                    key={certificate.id} 
+                    title={certificate.title} 
+                    issuer={certificate.issuer} 
+                    issue_month={certificate.issue_month}
+                    issue_year={Number(certificate.issue_year) || 0}
+                    credential_url={certificate.credential_url || ""}
+                  />
+                ))
+              )}
             </div>
           </FadeIn>
         </section>
