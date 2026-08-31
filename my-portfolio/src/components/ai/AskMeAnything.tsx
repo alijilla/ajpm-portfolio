@@ -45,7 +45,7 @@ export default function AskMessage() {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorState, setErrorState] = useState("");
-    const bottomRef = useRef<HTMLDivElement>(null);
+
     
    
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
@@ -57,7 +57,7 @@ export default function AskMessage() {
         setErrorState("")
         const userQuestion = question;
 
-            // 1. Show user's message immediately
+
             setMessages((previousMessages) => [
                 ...previousMessages,
                 {
@@ -131,11 +131,7 @@ export default function AskMessage() {
 
         } catch (error) {
             console.error("failed to ask a question", error);
-              setErrorState(
-                error instanceof Error
-                ? error.message
-                : "Something went wrong. Please try again."
-            );
+              setErrorState("Ai unavailable Please try again later; Quota Exceed");
         } finally {
           setIsLoading(false);
         }
