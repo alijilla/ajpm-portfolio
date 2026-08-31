@@ -83,10 +83,10 @@ export default function AdminPage() {
     resolver: zodResolver(heroSchemaUpdate),
   });
   
-  const expForm = useForm<any>();
-  const projForm = useForm<any>();
-  const certForm = useForm<any>();
-  const skillForm = useForm<any>();
+  const expForm = useForm<Experience>();
+  const projForm = useForm<ProjectCard>();
+  const certForm = useForm<Certificate>();
+  const skillForm = useForm<Skills>();
 
   // --- FETCH DATA ---
   useEffect(() => {
@@ -146,7 +146,7 @@ export default function AdminPage() {
   }
 
   // --- 2. EXPERIENCE CRUD ---
-  async function onSubmitExp(data: any) {
+  async function onSubmitExp(data: Omit<Experience, 'id'>) {
     // Convert comma-separated string back to array for DB
     const payload = {
       ...data,
@@ -183,7 +183,7 @@ export default function AdminPage() {
   }
 
   // --- 3. PROJECTS CRUD ---
-  async function onSubmitProj(data: any) {
+  async function onSubmitProj(data: ProjectCard) {
     const payload = {
       ...data,
       stack: typeof data.stack === "string" ? data.stack.split(",").map((s: string) => s.trim()) : data.stack,
@@ -219,9 +219,9 @@ export default function AdminPage() {
   }
 
   // --- 4. CERTIFICATES CRUD ---
-  async function onSubmitCert(data: any) {
+  async function onSubmitCert(data: Certificate) {
     // Ensure year is an integer
-    const payload = { ...data, issue_year: parseInt(data.issue_year) };
+    const payload = { ...data, issue_year: Number(data.issue_year) };
 
     if (editingCertId) {
       await fetch(`/api/certifications/${editingCertId}`, { method: "PATCH", body: JSON.stringify(payload) });
@@ -248,7 +248,7 @@ export default function AdminPage() {
   }
 
   // --- 5. SKILLS CRUD ---
-  async function onSubmitSkill(data: any) {
+  async function onSubmitSkill(data: Skills) {
     if (editingSkillId) {
       await fetch(`/api/skills/${editingSkillId}`, { method: "PATCH", body: JSON.stringify(data) });
       setSkill((prev) => prev.map((s) => (s.id === editingSkillId ? { ...s, ...data } : s)));

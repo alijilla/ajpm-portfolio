@@ -11,7 +11,7 @@ import Certificates from "@/components/Certificates";
 import Footer from "@/components/Footer";
 import { FadeIn } from "@/components/ui/fade-in";
 import { supabase } from "@/lib/supabase";
-
+import AskMessage from "@/components/ai/AskMeAnything";
 interface Certificate {
   id: string;
   title: string;
@@ -76,6 +76,7 @@ export default function Home() {
       <FadeIn delay={0.1}>
         <Hero  />
       </FadeIn>
+      <AskMessage />
 
       {/* Consistent content container */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-24">
