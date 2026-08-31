@@ -193,22 +193,33 @@ export default function AskMessage() {
                                                 {messages.map((message, i) => (
                                                     <MessageScrollerItem 
                                                         key={i}
-                                                        scrollAnchor={i === messages.length - 1}
+                                                        scrollAnchor={i === messages.length - 1 && !isLoading}
                                                         className={message.role === "user" ? "flex justify-end" : "flex justify-start"}
                                                     >
                                                         <Bubble variant={message.role === "user" ? "default" : "muted"}>
                                                          <BubbleContent>
-                                                            {message.content ? (
-                                                                message.content
-                                                            ) : isLoading ? (
-                                                                <span className="shimmer text-sm text-muted-foreground">
-                                                                    Thinking...
-                                                                </span>
-                                                            ) : null}
-                                                        </BubbleContent>
+                                                            {message.content}
+                                                         </BubbleContent>
                                                         </Bubble>
                                                     </MessageScrollerItem>
                                                 ))} 
+                                                
+                                                {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
+                                                    <MessageScrollerItem 
+                                                        scrollAnchor={true}
+                                                        className="flex justify-start"
+                                                    >
+                                                        <Bubble variant="muted">
+                                                         <BubbleContent>
+                                                            <div className="flex space-x-1.5 py-1.5 items-center px-1">
+                                                              <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                                                              <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                                                              <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                                                            </div>
+                                                         </BubbleContent>
+                                                        </Bubble>
+                                                    </MessageScrollerItem>
+                                                )}
                                                 
                                                 {errorState && (
                                                     <MessageScrollerItem className="flex justify-center mt-4">
