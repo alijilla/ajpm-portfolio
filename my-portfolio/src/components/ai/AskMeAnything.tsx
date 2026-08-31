@@ -237,7 +237,7 @@ export default function AskMessage() {
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && !e.shiftKey) {
                                     e.preventDefault();
-                                    handleSubmit(e as unknown as React.FormEvent);
+                                    handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
                                 }
                             }}
                         />
