@@ -1,5 +1,5 @@
 "use client";
-
+import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -95,12 +95,11 @@ export default function AdminPage() {
   // --- FETCH DATA ---
   useEffect(() => {
     if (!isAuthenticated) {
-      setIsLoading(false);
       return;
     }
     
-    setIsLoading(true);
     async function fetchData() {
+      setIsLoading(true);
       try {
         const [resHero, resSkill, resProj, resExp, resCert] = await Promise.all([
           fetch("/api/hero"),
@@ -134,15 +133,26 @@ export default function AdminPage() {
     fetchData();
   }, [isAuthenticated, heroForm]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  
+  
+  
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, simulate login
-    if (email === "admin@example.com" && password === "password") {
+
+   
+    // Call Supabase Authentication
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    if (error) {
+      alert("Error logging in: " + error.message);
+    } else if (data.session) {
       setIsAuthenticated(true);
-    } else {
-      alert("Invalid credentials. Try: admin@example.com / password");
     }
   };
+
+  
 
   // --- 1. HERO CRUD ---
   async function handleUpdateHero(herovalue: z.infer<typeof heroSchemaUpdate>) {
@@ -337,10 +347,13 @@ export default function AdminPage() {
             <p className="text-muted-foreground mt-1">manage your portfolio content here.</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setIsAuthenticated(false)}>
-              logout
-            </Button>
-            <Button nativeButton={false} variant="outline" render={<Link href="/" />}>
+              <Button variant="outline" onClick={async () => {
+                await supabase.auth.signOut();
+                setIsAuthenticated(false);
+              }}>
+                logout
+              </Button>            
+              <Button nativeButton={false} variant="outline" render={<Link href="/" />}>
               view live site
             </Button>
           </div>
