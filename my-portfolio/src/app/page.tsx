@@ -12,6 +12,9 @@ import Footer from "@/components/Footer";
 import { FadeIn } from "@/components/ui/fade-in";
 import { supabase } from "@/lib/supabase";
 import AskMessage from "@/components/ai/AskMeAnything";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 interface Certificate {
   id: string;
   title: string;
@@ -76,7 +79,24 @@ export default function Home() {
       <FadeIn delay={0.1}>
         <Hero  />
       </FadeIn>
-      <AskMessage />
+
+      <div className="fixed bottom-6 right-6 z-50">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button size="icon" className="h-14 w-14 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95">
+              <MessageCircle className="h-6 w-6" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent 
+            side="top" 
+            align="end" 
+            sideOffset={16}
+            className="w-[90vw] sm:w-[450px] p-0 border-none shadow-2xl rounded-xl bg-transparent"
+          >
+            <AskMessage />
+          </PopoverContent>
+        </Popover>
+      </div>
 
       {/* Consistent content container */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-24">

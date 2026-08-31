@@ -144,74 +144,85 @@ export default function AskMessage() {
     }
 
     return (
-
-        <section className="flex flex-col">
-            <Card  className="m-auto p-4 max-w-68">
-            <CardTitle>
-                <h2>Ask Me Anything!</h2>
-            </CardTitle>
-            <CardDescription>Ask me anything about me projects, skills, or experience</CardDescription>
-            <CardContent className="min-h-28 max-h-48 w-68">
-            
-                <Message>
-                    <MessageContent>
-                    <div className="flex h-48 w-full">
-                      <MessageScrollerProvider>
-                        <MessageScroller> 
-                            <MessageScrollerViewport>
-                                <MessageScrollerContent>
-                                    {(messages.map((message, i) => (
-                                        <MessageScrollerItem 
-                                        key={i}
-                                        scrollAnchor={i === messages.length - 1}
-                                        className={message.role === "user" ? "flex justify-end" : "flex justify-start"}>
-                                        <Bubble variant={message.role === "user" ? "default": "muted"}>
-                                        <BubbleContent>         {message.content ? (
-                    message.content
-                    ) : (
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    )}           </BubbleContent>
-                                                    </Bubble>
-                                        </MessageScrollerItem>
-
-                                    )))} 
-                                    
-                                                         
-                                 {errorState && (
-                                    <MessageScrollerItem className="flex justify-start">
-                                        <Bubble variant="muted">
-                                        <BubbleContent>
-                                            {errorState}
-                                        </BubbleContent>
-                                        </Bubble>
-                                    </MessageScrollerItem>
-                                    )}
-
-                                  
-                                                                                                            
-                                </MessageScrollerContent>
-                            </MessageScrollerViewport>
-                        </MessageScroller>
-                     </MessageScrollerProvider>
-                     </div>
-                    </MessageContent>
-                </Message>
-            </CardContent>
-            <CardFooter>
-                <div className="flex flex-row items-center justify-center">
-                <form onSubmit={handleSubmit}>
-                <Textarea className="w-48" value={question} onChange={(event) => setQuestion(event.target.value)}/>
-                
-
-             <Button type="submit" className="flex items-center justify-center" disabled={isLoading}>
-                 <ArrowUp  className=" w-4 h-4 m-0"/>
-            </Button>
-             </form>
-            </div>
-           
-
-            </CardFooter>
+        <section className="flex flex-col w-full mx-auto">
+            <Card className="w-full shadow-2xl border flex flex-col overflow-hidden">
+                <div className="p-6 pb-4 border-b bg-card">
+                    <CardTitle className="text-2xl font-bold tracking-tight">Ask Me Anything!</CardTitle>
+                    <CardDescription className="text-base mt-2">
+                        Ask me anything about my projects, skills, or experience.
+                    </CardDescription>
+                </div>
+                <CardContent className="h-[400px] p-0 flex flex-col bg-muted/10">
+                    <Message className="flex-1 overflow-hidden border-none shadow-none">
+                        <MessageContent className="h-full w-full">
+                            <div className="flex h-full w-full p-4">
+                                <MessageScrollerProvider>
+                                    <MessageScroller className="h-full w-full"> 
+                                        <MessageScrollerViewport className="h-full w-full pr-2">
+                                            <MessageScrollerContent className="flex flex-col gap-4">
+                                                {messages.length === 0 && (
+                                                    <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground text-sm p-8 text-center h-[300px]">
+                                                        <span className="text-4xl mb-4">👋</span>
+                                                        <p>Hi there! I'm an AI assistant.</p>
+                                                        <p className="mt-1">Feel free to ask me anything about the developer's experience, skills, and projects!</p>
+                                                    </div>
+                                                )}
+                                                {messages.map((message, i) => (
+                                                    <MessageScrollerItem 
+                                                        key={i}
+                                                        scrollAnchor={i === messages.length - 1}
+                                                        className={message.role === "user" ? "flex justify-end" : "flex justify-start"}
+                                                    >
+                                                        <Bubble variant={message.role === "user" ? "default" : "muted"}>
+                                                            <BubbleContent>
+                                                                {message.content ? message.content : <Loader2 className="h-5 w-5 animate-spin" />}
+                                                            </BubbleContent>
+                                                        </Bubble>
+                                                    </MessageScrollerItem>
+                                                ))} 
+                                                
+                                                {errorState && (
+                                                    <MessageScrollerItem className="flex justify-center mt-4">
+                                                        <Bubble variant="muted" className="bg-destructive/10 text-destructive border-destructive/20">
+                                                            <BubbleContent className="text-sm">
+                                                                {errorState}
+                                                            </BubbleContent>
+                                                        </Bubble>
+                                                    </MessageScrollerItem>
+                                                )}
+                                            </MessageScrollerContent>
+                                        </MessageScrollerViewport>
+                                    </MessageScroller>
+                                </MessageScrollerProvider>
+                            </div>
+                        </MessageContent>
+                    </Message>
+                </CardContent>
+                <CardFooter className="p-4 border-t bg-card">
+                    <form onSubmit={handleSubmit} className="flex w-full items-end gap-2 relative">
+                        <Textarea 
+                            className="flex-1 min-h-[48px] max-h-[120px] resize-none pr-12 rounded-xl py-3 shadow-sm bg-background" 
+                            placeholder="Type your question..."
+                            value={question} 
+                            onChange={(event) => setQuestion(event.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    handleSubmit(e as any);
+                                }
+                            }}
+                        />
+                        <Button 
+                            type="submit" 
+                            size="icon"
+                            className="absolute right-2 bottom-2 rounded-full h-8 w-8 shadow-sm transition-all active:scale-95" 
+                            disabled={isLoading || !question.trim()}
+                        >
+                            <ArrowUp className="w-4 h-4" />
+                        </Button>
+                    </form>
+                </CardFooter>
             </Card>
         </section>
-    )
+    );
 }
