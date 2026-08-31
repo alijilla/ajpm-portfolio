@@ -58,9 +58,7 @@ export default function Hero() {
   return (
     <section className="lowercase py-16 px-4 sm:px-6 lg:px-8">
       <article className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
-      {isLoading ? (
-        <div className="flex justify-center p-8"><Loader2 className="animate-spin h-6 w-6 text-muted-foreground" /></div>
-      ) : hero ? (
+      {hero ? (
         <>
         <div className="flex flex-col gap-4 md:basis-2/3">
           <Badge className="w-fit text-xs rounded-full px-3 py-1">
