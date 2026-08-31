@@ -186,8 +186,8 @@ export default function AskMessage() {
                                                 {messages.length === 0 && (
                                                     <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground text-sm p-8 text-center h-[300px]">
                                                         <span className="text-4xl mb-4">👋</span>
-                                                        <p>Hi there! I'm an AI assistant.</p>
-                                                        <p className="mt-1">Feel free to ask me anything about the developer's experience, skills, and projects!</p>
+                                                        <p>Hi there! I&apos;m an AI assistant.</p>
+                                                        <p className="mt-1">Feel free to ask me anything about the developer&apos;s experience, skills, and projects!</p>
                                                     </div>
                                                 )}
                                                 {messages.map((message, i) => (
@@ -237,7 +237,7 @@ export default function AskMessage() {
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && !e.shiftKey) {
                                     e.preventDefault();
-                                    handleSubmit(e as any);
+                                    handleSubmit(e as unknown as React.FormEvent);
                                 }
                             }}
                         />

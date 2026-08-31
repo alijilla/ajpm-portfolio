@@ -174,8 +174,9 @@ export default function AdminPage() {
         .getPublicUrl(filePath);
 
       return data.publicUrl;
-    } catch (error: any) {
-      alert("Upload failed. Make sure you created a public 'portfolio-images' storage bucket. Error: " + error.message);
+    } catch (error: unknown) {
+      const err = error as Error;
+      alert("Upload failed. Make sure you created a public 'portfolio-images' storage bucket. Error: " + err.message);
       return null;
     } finally {
       setIsUploading(false);
