@@ -47,7 +47,7 @@ export default function AskMessage() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorState, setErrorState] = useState("");
     const abortControllerRef = useRef<AbortController | null>(null);
-    
+    const [thinkingDots, setThinkingDots] = useState("");
    
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault();
@@ -161,8 +161,9 @@ export default function AskMessage() {
     
 
     function handleStop() {
-    setIsLoading(false);
+    
     abortControllerRef.current?.abort();
+    setIsLoading(false);
 }
 
     return (
@@ -196,9 +197,15 @@ export default function AskMessage() {
                                                         className={message.role === "user" ? "flex justify-end" : "flex justify-start"}
                                                     >
                                                         <Bubble variant={message.role === "user" ? "default" : "muted"}>
-                                                            <BubbleContent>
-                                                                {message.content ? message.content : <Loader2 className="h-5 w-5 animate-spin" />}
-                                                            </BubbleContent>
+                                                         <BubbleContent>
+                                                            {message.content ? (
+                                                                message.content
+                                                            ) : isLoading ? (
+                                                                <span className="shimmer text-sm text-muted-foreground">
+                                                                    Thinking...
+                                                                </span>
+                                                            ) : null}
+                                                        </BubbleContent>
                                                         </Bubble>
                                                     </MessageScrollerItem>
                                                 ))} 

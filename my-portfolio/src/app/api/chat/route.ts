@@ -12,9 +12,14 @@ export async function GET(){
 
 }
 
+type ChatMessage = {
+    role: "user" | "assistant";
+    content: string;
+};
+
 export async function POST(request: Request) {
     
-    const { data: hero, error: heroError } = await supabase
+const { data: hero, error: heroError } = await supabase
   .from("hero")
   .select("*");
    if (heroError) {
@@ -107,7 +112,6 @@ ${JSON.stringify(experiences)}
 `;
 
     const body = await request.json();
-
         console.log("QUESTION:", body.question);
          console.log("MESSAGES:", body.messages);
     if (!body.question) {
@@ -120,10 +124,30 @@ ${JSON.stringify(experiences)}
         );
     }
      console.log("BODY:", body);
+
+    const conversation = [
+    ...(body.messages || []).map((message: ChatMessage) => ({
+        role: message.role === "assistant" ? "model" : "user",
+        parts: [
+            {
+                text: message.content,
+            },
+        ],
+    })),
+    {
+        role: "user",
+        parts: [
+            {
+                text: body.question,
+            },
+        ],
+    },
+];
+
+    
      
      try {
-
-        const responseStream = await ai.models.generateContentStream({
+const responseStream = await ai.models.generateContentStream({
         model: "gemini-3.6-flash",
         config: {
             systemInstruction: `
@@ -145,7 +169,7 @@ ${JSON.stringify(experiences)}
             ${portfolioContext}
             `,
             },
-        contents: body.question,
+        contents: conversation,
         }); 
 
 
@@ -173,6 +197,8 @@ const stream = new ReadableStream({
 });
        
 
+
+
         return new Response(stream, {
            headers:{
             "Content-Type": "text/plain; charset=utf-8",
@@ -180,6 +206,7 @@ const stream = new ReadableStream({
            }
             
         });
+        
             
 
      } catch (error: unknown) {
