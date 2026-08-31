@@ -1,6 +1,5 @@
 "use client"
-import { flushSync } from "react-dom";
-import { useState, useEffect, useRef} from "react"
+import { useState, useRef } from "react";
 import { Loader2 } from "lucide-react";
 import {
   Card,
@@ -32,20 +31,22 @@ import {
     BubbleContent, 
    } from "@/components/ui/bubble";
 import { Button } from "../ui/button";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, CircleStop } from "lucide-react";
 
 
 type ChatMessage = {
     role:"user" | "assistant";
     content: string;
 };
+
+
 export default function AskMessage() {
 
     const [question, setQuestion] = useState("");
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorState, setErrorState] = useState("");
-
+    const abortControllerRef = useRef<AbortController | null>(null);
     
    
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
@@ -63,34 +64,44 @@ export default function AskMessage() {
                 {
                 role: "user",
                 content: userQuestion,
-                },{
-                    role:"assistant",
-                    content:"",
-                }
+                },
             ]);
 
             setQuestion("");
             setIsLoading(true);
+            const controller = new AbortController();
+            abortControllerRef.current = controller;
         try {
  
             const res = await fetch("/api/chat", {
                 method: "POST",
                 headers: {"Content-Type" : "application/json" },
+                signal: controller.signal,
                 body: JSON.stringify({
                 question: userQuestion,
                  messages: messages,
                 }),
          } )
         
-            if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(errorText || "Something went wrong");
-    }
+  if (!res.ok) {
+    const errorData = await res.json();
+
+    throw new Error(
+        errorData.message || "AI is unavailable. Please try again later."
+    );
+}
           const reader = res.body?.getReader();
 
           if(!reader) {
             throw new Error("No response stream");
           }
+          setMessages((previousMessages) => [
+    ...previousMessages,
+    {
+        role: "assistant",
+        content: "",
+    },
+]);
           
           const decoder = new TextDecoder ();
           let assistantText = "";
@@ -121,23 +132,38 @@ export default function AskMessage() {
 
          );
 
-       await new Promise((resolve) => setTimeout(resolve, 300));
+     
           
         }
         
          
           
 
-
-        } catch (error) {
-            console.error("failed to ask a question", error);
-              setErrorState("Ai unavailable Please try again later; Quota Exceed");
-        } finally {
-          setIsLoading(false);
-        }
-  
-    
+} catch (error) {
+    if (
+        error instanceof DOMException &&
+        error.name === "AbortError"
+    ) {
+        console.log("Generation stopped by user");
+        return;
     }
+
+    setErrorState(
+        error instanceof Error
+            ? error.message
+            : "AI is unavailable. Please try again later."
+    );
+} finally {
+    setIsLoading(false);
+    abortControllerRef.current = null;
+}
+}
+    
+
+    function handleStop() {
+    setIsLoading(false);
+    abortControllerRef.current?.abort();
+}
 
     return (
         <section className="flex flex-col w-full mx-auto">
@@ -208,14 +234,34 @@ export default function AskMessage() {
                                 }
                             }}
                         />
+
+                        {isLoading ?
+                        (
                         <Button 
+                           variant="destructive"
+                            size="icon"
+                            onClick={handleStop}
+                            className="absolute right-2 bottom-2 rounded-full h-8 w-8 shadow-sm transition-all active:scale-95" 
+                            
+                        >
+                            <CircleStop className="w-4 h-4" />
+                        </Button>
+                        )
+                        
+                        
+                        : (<Button 
+                            
                             type="submit" 
                             size="icon"
                             className="absolute right-2 bottom-2 rounded-full h-8 w-8 shadow-sm transition-all active:scale-95" 
-                            disabled={isLoading || !question.trim()}
+                            disabled={!question.trim()}
                         >
                             <ArrowUp className="w-4 h-4" />
-                        </Button>
+                        </Button>)
+
+                        }
+
+                        
                     </form>
                 </CardFooter>
             </Card>

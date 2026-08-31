@@ -62,7 +62,11 @@ type Skills = {
 };
 
 export default function AdminPage() {
-  // --- STATES ---
+  // --- AUTH STATE ---
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [hero, setHero] = useState<Hero | null>(null);
   const [exp, setExp] = useState<Experience[]>([]);
   const [projects, setProj] = useState<ProjectCard[]>([]);
@@ -90,6 +94,12 @@ export default function AdminPage() {
 
   // --- FETCH DATA ---
   useEffect(() => {
+    if (!isAuthenticated) {
+      setIsLoading(false);
+      return;
+    }
+    
+    setIsLoading(true);
     async function fetchData() {
       try {
         const [resHero, resSkill, resProj, resExp, resCert] = await Promise.all([
@@ -122,7 +132,17 @@ export default function AdminPage() {
       }
     }
     fetchData();
-  }, []);
+  }, [isAuthenticated, heroForm]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // For now, simulate login
+    if (email === "admin@example.com" && password === "password") {
+      setIsAuthenticated(true);
+    } else {
+      alert("Invalid credentials. Try: admin@example.com / password");
+    }
+  };
 
   // --- 1. HERO CRUD ---
   async function handleUpdateHero(herovalue: z.infer<typeof heroSchemaUpdate>) {
@@ -267,6 +287,45 @@ export default function AdminPage() {
     setSkill((prev) => prev.filter((s) => s.id !== id));
   }
 
+  if (!isAuthenticated) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-muted/30 p-4 lowercase">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>admin login</CardTitle>
+            <CardDescription>please sign in to manage your portfolio.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">email</label>
+                <Input
+                  type="email"
+                  placeholder="admin@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <label className="text-sm font-medium">password</label>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                login
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-muted/30 p-4 md:p-10 lowercase">
       <div className="max-w-5xl mx-auto space-y-8">
@@ -278,6 +337,9 @@ export default function AdminPage() {
             <p className="text-muted-foreground mt-1">manage your portfolio content here.</p>
           </div>
           <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setIsAuthenticated(false)}>
+              logout
+            </Button>
             <Button nativeButton={false} variant="outline" render={<Link href="/" />}>
               view live site
             </Button>
