@@ -246,7 +246,7 @@ export default function AdminPage() {
     const payload = {
       ...data,
       stack: typeof data.stack === "string" ? data.stack.split(",").map((s: string) => s.trim()) : data.stack,
-      imagesource: typeof data.imagesource === "string" ? [data.imagesource] : data.imagesource,
+      imagesource: typeof data.imagesource === "string" ? data.imagesource.split(",").map((s: string) => s.trim()) : data.imagesource,
     };
 
     if (editingProjId) {
@@ -272,7 +272,7 @@ export default function AdminPage() {
     projForm.reset({
       ...item,
       stack: Array.isArray(item.stack) ? item.stack.join(", ") : item.stack,
-      imagesource: Array.isArray(item.imagesource) ? item.imagesource[0] : item.imagesource,
+      imagesource: Array.isArray(item.imagesource) ? item.imagesource.join(", ") : item.imagesource,
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -540,12 +540,20 @@ export default function AdminPage() {
                         <Input 
                           type="file" 
                           accept="image/*" 
+                          multiple
                           className="w-auto cursor-pointer"
                           disabled={isUploading}
                           onChange={async (e) => {
-                            if (e.target.files && e.target.files[0]) {
-                              const url = await uploadImageToSupabase(e.target.files[0]);
-                              if (url) projForm.setValue("imagesource", url);
+                            if (e.target.files && e.target.files.length > 0) {
+                              const files = Array.from(e.target.files);
+                              const urls = await Promise.all(files.map(file => uploadImageToSupabase(file)));
+                              const validUrls = urls.filter(Boolean);
+                              
+                              if (validUrls.length > 0) {
+                                const existing = projForm.getValues("imagesource");
+                                const newStr = existing ? existing + ", " + validUrls.join(", ") : validUrls.join(", ");
+                                projForm.setValue("imagesource", newStr);
+                              }
                             }
                           }}
                         />
