@@ -88,27 +88,19 @@ export default function Home() {
 
       <div className="fixed bottom-6 right-6 z-50">
         <Popover>
-          <PopoverTrigger render={
+          <Tooltip>
+              <TooltipTrigger render={
+                  <PopoverTrigger render={
+                    <Button size="icon" className="h-14 w-14 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95">
+                      <MessageCircle className="h-6 w-6" />
+                    </Button>
 
-              <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger render={
-                  <Button 
-                  size="icon" 
-                  className="h-14 w-14 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95"/>}>
-                  <MessageCircle className="h-6 w-6" />
-                </TooltipTrigger>
-                <TooltipContent>Ask Me Anything</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                  }/>
 
-
+              }/>
+              <TooltipContent side="right">Ask Me Anything</TooltipContent>
+            </Tooltip>     
           
-          
-          
-          
-          
-          } />
           <PopoverContent 
             side="top" 
             align="end" 
