@@ -9,7 +9,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-
+import ReactMarkdown from 'react-markdown';
 import { Textarea } from "@/components/ui/textarea";
 import {
 
@@ -198,7 +198,11 @@ export default function AskMessage() {
                                                     >
                                                         <Bubble variant={message.role === "user" ? "default" : "muted"}>
                                                          <BubbleContent>
-                                                            {message.content}
+                                                         <div className="prose dark:prose-invert">
+                                                            <ReactMarkdown>
+                                                               {message.content}
+                                                            </ReactMarkdown>
+                                                         </div>
                                                          </BubbleContent>
                                                         </Bubble>
                                                     </MessageScrollerItem>
