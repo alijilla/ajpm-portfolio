@@ -21,7 +21,7 @@ interface ExperienceProp {
 
 
 export default function Experience(props: ExperienceProp) {
-  const isCurrent = props.end_date === "Present";
+  const isCurrent = props.end_date.toLowerCase() === "present";
 
   return (
     <article className="flex-1 min-w-[260px]">

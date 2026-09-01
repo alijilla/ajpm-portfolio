@@ -483,8 +483,8 @@ export default function AdminPage() {
                     <div className="grid gap-2"><label className="text-sm font-medium">position</label><Input {...expForm.register("position")} placeholder="e.g. AI Engineer" required /></div>
                     <div className="grid gap-2"><label className="text-sm font-medium">type</label><Input {...expForm.register("type")} placeholder="e.g. Full-time, Internship" required /></div>
                     <div className="grid gap-2"><label className="text-sm font-medium">tech stack</label><Input {...expForm.register("stack")} placeholder="React, Next.js (comma separated)" /></div>
-                    <div className="grid gap-2"><label className="text-sm font-medium">start date</label><Input {...expForm.register("start_date")} type="month" required /></div>
-                    <div className="grid gap-2"><label className="text-sm font-medium">end date</label><Input {...expForm.register("end_date")} type="month" placeholder="Leave blank if present" /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">start date</label><Input {...expForm.register("start_date")} type="text" placeholder="e.g. July 2024" required /></div>
+                    <div className="grid gap-2"><label className="text-sm font-medium">end date</label><Input {...expForm.register("end_date")} type="text" placeholder="e.g. Present" required /></div>
                   </div>
                   <div className="grid gap-2"><label className="text-sm font-medium">description</label><Textarea {...expForm.register("description")} placeholder="What did you do there?" required /></div>
                   <Button type="submit" className="w-fit">
