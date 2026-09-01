@@ -495,20 +495,26 @@ export default function AdminPage() {
               </CardContent>
             </Card>
 
-            <div className="grid gap-4">
-              <h3 className="text-lg font-semibold tracking-tight mt-4">existing experiences</h3>
-              {exp?.map((item) => (
-                <Card key={item.id} className={`flex flex-col md:flex-row justify-between items-start md:items-center p-4 ${editingExpId === item.id ? 'border-primary ring-1 ring-primary' : ''}`}>
-                  <div>
-                    <h4 className="font-medium">{item.position} <span className="text-muted-foreground font-normal">at {item.company}</span></h4>
-                    <p className="text-sm text-muted-foreground">{item.start_date} - {item.end_date || "Present"}</p>
-                  </div>
-                  <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button variant="outline" size="sm" onClick={() => handleEditExpClick(item)}><Pencil className="h-4 w-4 mr-2" /> edit</Button>
-                    <Button variant="destructive" size="sm" onClick={() => handleDeleteExp(item.id)}><Trash2 className="h-4 w-4 mr-2" /> delete</Button>
-                  </div>
-                </Card>
-              ))}
+            <div className="grid gap-4 mt-8">
+              <h3 className="text-lg font-semibold tracking-tight">existing experiences</h3>
+              {!exp || exp.length === 0 ? (
+                <div className="p-8 text-center border rounded-xl border-dashed bg-muted/20">
+                  <p className="text-sm text-muted-foreground">No experiences added yet. Fill out the form above to get started!</p>
+                </div>
+              ) : (
+                exp.map((item) => (
+                  <Card key={item.id} className={`flex flex-col md:flex-row justify-between items-start md:items-center p-4 transition-all ${editingExpId === item.id ? 'border-primary ring-1 ring-primary shadow-sm bg-primary/5' : 'hover:shadow-sm'}`}>
+                    <div>
+                      <h4 className="font-semibold text-foreground">{item.position} <span className="text-muted-foreground font-normal">at {item.company}</span></h4>
+                      <p className="text-sm text-muted-foreground mt-1">{item.start_date} - {item.end_date || "Present"}</p>
+                    </div>
+                    <div className="flex gap-2 mt-4 md:mt-0 w-full md:w-auto">
+                      <Button variant="secondary" size="sm" className="flex-1 md:flex-none" onClick={() => handleEditExpClick(item)}><Pencil className="h-3.5 w-3.5 mr-2" /> edit</Button>
+                      <Button variant="outline" size="sm" className="flex-1 md:flex-none text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteExp(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
+                    </div>
+                  </Card>
+                ))
+              )}
             </div>
           </TabsContent>
 
@@ -570,19 +576,28 @@ export default function AdminPage() {
               </CardContent>
             </Card>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              {projects?.map((item) => (
-                <Card key={item.id} className={`flex flex-col justify-between p-4 space-y-4 ${editingProjId === item.id ? 'border-primary ring-1 ring-primary' : ''}`}>
-                  <div>
-                    <h4 className="font-medium">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="flex-1" onClick={() => handleEditProjClick(item)}><Pencil className="h-4 w-4 mr-2" /> edit</Button>
-                    <Button variant="destructive" size="sm" className="flex-1" onClick={() => handleDeleteProj(item.id)}><Trash2 className="h-4 w-4 mr-2" /> delete</Button>
-                  </div>
-                </Card>
-              ))}
+            <div className="grid gap-4 mt-8">
+              <h3 className="text-lg font-semibold tracking-tight">existing projects</h3>
+              {!projects || projects.length === 0 ? (
+                <div className="p-8 text-center border rounded-xl border-dashed bg-muted/20 md:col-span-2">
+                  <p className="text-sm text-muted-foreground">No projects added yet. Fill out the form above to get started!</p>
+                </div>
+              ) : (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {projects.map((item) => (
+                    <Card key={item.id} className={`flex flex-col justify-between p-4 space-y-4 transition-all ${editingProjId === item.id ? 'border-primary ring-1 ring-primary shadow-sm bg-primary/5' : 'hover:shadow-sm'}`}>
+                      <div>
+                        <h4 className="font-semibold text-foreground">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{item.description}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="secondary" size="sm" className="flex-1" onClick={() => handleEditProjClick(item)}><Pencil className="h-3.5 w-3.5 mr-2" /> edit</Button>
+                        <Button variant="outline" size="sm" className="flex-1 text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteProj(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
           </TabsContent>
 
@@ -617,19 +632,28 @@ export default function AdminPage() {
               </CardContent>
             </Card>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              {cert?.map((item) => (
-                <Card key={item.id} className={`flex flex-col justify-between p-4 space-y-4 ${editingCertId === item.id ? 'border-primary ring-1 ring-primary' : ''}`}>
-                  <div>
-                    <h4 className="font-medium">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.issuer} ({item.issue_month} {item.issue_year})</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="flex-1" onClick={() => handleEditCertClick(item)}><Pencil className="h-4 w-4 mr-2" /> edit</Button>
-                    <Button variant="destructive" size="sm" className="flex-1" onClick={() => handleDeleteCert(item.id)}><Trash2 className="h-4 w-4 mr-2" /> delete</Button>
-                  </div>
-                </Card>
-              ))}
+            <div className="grid gap-4 mt-8">
+              <h3 className="text-lg font-semibold tracking-tight">existing certificates</h3>
+              {!cert || cert.length === 0 ? (
+                <div className="p-8 text-center border rounded-xl border-dashed bg-muted/20 md:col-span-2">
+                  <p className="text-sm text-muted-foreground">No certificates added yet. Fill out the form above to get started!</p>
+                </div>
+              ) : (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {cert.map((item) => (
+                    <Card key={item.id} className={`flex flex-col justify-between p-4 space-y-4 transition-all ${editingCertId === item.id ? 'border-primary ring-1 ring-primary shadow-sm bg-primary/5' : 'hover:shadow-sm'}`}>
+                      <div>
+                        <h4 className="font-semibold text-foreground">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground mt-1">{item.issuer} ({item.issue_month} {item.issue_year})</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="secondary" size="sm" className="flex-1" onClick={() => handleEditCertClick(item)}><Pencil className="h-3.5 w-3.5 mr-2" /> edit</Button>
+                        <Button variant="outline" size="sm" className="flex-1 text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteCert(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
           </TabsContent>
 
@@ -667,23 +691,32 @@ export default function AdminPage() {
               </CardContent>
             </Card>
 
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {skills?.map((item) => (
-                <Card key={item.id} className={`flex justify-between items-center p-4 ${editingSkillId === item.id ? 'border-primary ring-1 ring-primary' : ''}`}>
-                  <div>
-                    <h4 className="font-medium text-sm">{item.name}</h4>
-                    <p className="text-xs text-muted-foreground">{item.category}</p>
-                  </div>
-                  <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground" onClick={() => { setEditingSkillId(item.id); skillForm.reset(item); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:bg-destructive/10" onClick={() => handleDeleteSkill(item.id)}>
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </Card>
-              ))}
+            <div className="grid gap-4 mt-8">
+              <h3 className="text-lg font-semibold tracking-tight">existing skills</h3>
+              {!skills || skills.length === 0 ? (
+                <div className="p-8 text-center border rounded-xl border-dashed bg-muted/20 sm:col-span-2 md:col-span-3 lg:col-span-4">
+                  <p className="text-sm text-muted-foreground">No skills added yet. Fill out the form above to get started!</p>
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {skills.map((item) => (
+                    <Card key={item.id} className={`flex justify-between items-center p-4 transition-all ${editingSkillId === item.id ? 'border-primary ring-1 ring-primary shadow-sm bg-primary/5' : 'hover:shadow-sm'}`}>
+                      <div>
+                        <h4 className="font-semibold text-sm text-foreground">{item.name}</h4>
+                        <p className="text-xs text-muted-foreground mt-0.5">{item.category}</p>
+                      </div>
+                      <div className="flex gap-1">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => { setEditingSkillId(item.id); skillForm.reset(item); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+                          <Pencil className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteSkill(item.id)}>
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
           </TabsContent>
 
