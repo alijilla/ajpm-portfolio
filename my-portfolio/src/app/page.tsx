@@ -1,5 +1,5 @@
 "use client"
-
+import dynamic from "next/dynamic"
 import {useState, useEffect} from "react"
 import Navbar from "@/components/Navbar";
 import ProjectCard from "@/components/ProjectCard"
@@ -20,6 +20,7 @@ import {
   TooltipContent,
   TooltipProvider,
 } from "@/components/ui/tooltip"
+import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button";
 interface Certificate {
   id: string;
@@ -40,6 +41,19 @@ interface Experience {
   description: string;
   stack: string[]; // Fix: stack is an array in Supabase, not a string
 }
+
+
+
+
+const Scene = dynamic(() => import("@/components/3d/hero-3d"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center bg-muted/20 animate-pulse rounded-xl border border-dashed">
+      <p className="text-muted-foreground font-mono text-sm">Loading 3D Experience...</p>
+    </div>
+  ),
+});
+
 
 export default function Home() {
  const [exp, setExp] = useState<Experience[] | null>(null);
@@ -79,10 +93,11 @@ export default function Home() {
   }, [])
 
   return (
-    <main>
+    <main >
       <Navbar name="Alyssa Jade Merjilla"/>
 
       <FadeIn delay={0.1}>
+        <Scene />
         <Hero  />
       </FadeIn>
 
