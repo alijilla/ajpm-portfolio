@@ -76,13 +76,13 @@ export default function Hero() {
         </>
       ) : hero ? (
         <>
-        <div className="flex flex-col gap-4 md:basis-2/3">
+        <div className="flex flex-col gap-4 md:basis-2/3 relative z-10">
           <Badge className="w-fit text-xs rounded-full px-3 py-1">
             {hero.role}
           </Badge>
 
           <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
-            {hero.headline}{" "}
+            {hero.headline}{" "} <br></br>
             <span className="text-muted-foreground">
               {hero.headline_1}
             </span>

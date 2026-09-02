@@ -97,7 +97,7 @@ export default function Home() {
       <Navbar name="Alyssa Jade Merjilla"/>
 
       <FadeIn delay={0.1}>
-        <Scene />
+        {/*<Scene />*/}
         <Hero  />
       </FadeIn>
 
