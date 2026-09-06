@@ -510,7 +510,7 @@ export default function AdminPage() {
                     </div>
                     <div className="flex gap-2 mt-4 md:mt-0 w-full md:w-auto">
                       <Button variant="secondary" size="sm" className="flex-1 md:flex-none" onClick={() => handleEditExpClick(item)}><Pencil className="h-3.5 w-3.5 mr-2" /> edit</Button>
-                      <Button variant="outline" size="sm" className="flex-1 md:flex-none text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteExp(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
+                      <Button variant="outline" size="sm" className="flex-1 md:flex-none text-destructive hover:bg-destructive/10" onClick={() => handleDeleteExp(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
                     </div>
                   </Card>
                 ))
@@ -592,7 +592,7 @@ export default function AdminPage() {
                       </div>
                       <div className="flex gap-2">
                         <Button variant="secondary" size="sm" className="flex-1" onClick={() => handleEditProjClick(item)}><Pencil className="h-3.5 w-3.5 mr-2" /> edit</Button>
-                        <Button variant="outline" size="sm" className="flex-1 text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteProj(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
+                        <Button variant="outline" size="sm" className="flex-1 text-destructive hover:bg-destructive/10" onClick={() => handleDeleteProj(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
                       </div>
                     </Card>
                   ))}
@@ -648,7 +648,7 @@ export default function AdminPage() {
                       </div>
                       <div className="flex gap-2">
                         <Button variant="secondary" size="sm" className="flex-1" onClick={() => handleEditCertClick(item)}><Pencil className="h-3.5 w-3.5 mr-2" /> edit</Button>
-                        <Button variant="outline" size="sm" className="flex-1 text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteCert(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
+                        <Button variant="outline" size="sm" className="flex-1 text-destructive hover:bg-destructive/10" onClick={() => handleDeleteCert(item.id)}><Trash2 className="h-3.5 w-3.5 mr-2" /> delete</Button>
                       </div>
                     </Card>
                   ))}
@@ -709,7 +709,7 @@ export default function AdminPage() {
                         <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => { setEditingSkillId(item.id); skillForm.reset(item); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
                           <Pencil className="h-3.5 w-3.5" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:bg-destructive hover:text-destructive-foreground" onClick={() => handleDeleteSkill(item.id)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:bg-destructive/10" onClick={() => handleDeleteSkill(item.id)}>
                           <Trash2 className="h-3.5 w-3.5" />
                         </Button>
                       </div>
