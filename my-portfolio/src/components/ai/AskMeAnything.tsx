@@ -180,7 +180,7 @@ export default function AskMessage() {
                  </p>
                </div>
             
-                <CardContent className="h-[400px] p-0 flex flex-col bg-muted/10">
+                <CardContent className="h-[350px] p-0 flex flex-col bg-muted/10">
                     <Message className="flex-1 overflow-hidden border-none shadow-none">
                         <MessageContent className="h-full w-full">
                             <div className="flex h-full w-full p-4">

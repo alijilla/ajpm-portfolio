@@ -118,9 +118,9 @@ export default function Home() {
           
           <PopoverContent 
             side="top" 
-            align="end" 
+            align="center"
             sideOffset={16}
-            className="w-[90vw] sm:w-[450px] p-0 border-none shadow-2xl rounded-xl bg-transparent"
+            className="w-[80vw] sm:w-[350px] p-0 border-none shadow-2xl rounded-xl bg-transparent"
           >
             <AskMessage />
           </PopoverContent>
