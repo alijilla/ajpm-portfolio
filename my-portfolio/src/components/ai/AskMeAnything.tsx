@@ -1,6 +1,6 @@
 "use client"
 import { useState, useRef } from "react";
-import { Loader2 } from "lucide-react";
+import { SparklesIcon } from "lucide-react";
 import {
   Card,
   CardFooter,
@@ -15,7 +15,6 @@ import { Textarea } from "@/components/ui/textarea";
 import {
 
   Message,
-
   MessageContent,
 
 }
@@ -48,7 +47,7 @@ export default function AskMessage() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorState, setErrorState] = useState("");
     const abortControllerRef = useRef<AbortController | null>(null);
-    const [thinkingDots, setThinkingDots] = useState("");
+
    
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
         event.preventDefault();
@@ -186,7 +185,7 @@ export default function AskMessage() {
                                             <MessageScrollerContent className="flex flex-col gap-4">
                                                 {messages.length === 0 && (
                                                     <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground text-sm p-8 text-center h-[300px]">
-                                                        <span className="text-4xl mb-4">👋</span>
+                                                        <span className="text-4xl mb-4"><SparklesIcon className="w-4 h-4" /></span>
                                                         <p>Hi there! I&apos;m an AI assistant.</p>
                                                         <p className="mt-1">Feel free to ask me anything about the developer&apos;s experience, skills, and projects!</p>
                                                     </div>
