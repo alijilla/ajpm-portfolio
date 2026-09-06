@@ -81,7 +81,7 @@ export function ContactForm({ cta }: { cta?: string }) {
       {/* Left side: Info & Socials */}
       <div className="flex flex-col gap-6 md:basis-1/2">
         <div className="space-y-4">
-          <p className="text-base text-muted-foreground leading-relaxed lowercase">
+          <p className="text-base text-muted-foreground leading-relaxed ">
             {cta}
           </p>
         </div>
