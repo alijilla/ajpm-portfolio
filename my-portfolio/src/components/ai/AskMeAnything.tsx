@@ -169,8 +169,8 @@ export default function AskMessage() {
 
     return (
         <section className="flex flex-col w-full mx-auto">
-          <Card className="w-full max-h-[calc(100vh-100px)] shadow-2xl border flex flex-col overflow-hidden">                
-                <div className="shrink-0 border-b ...">
+          <Card className="w-full h-[600px] max-h-[calc(100vh-120px)] shadow-2xl flex flex-col overflow-hidden">                
+               <div className="shrink-0 p-4 border-b bg-card">
                  <h2 className="font-bold text-lg text-foreground flex items-center gap-2">
                    <span className="text-purple-500">✨</span> AI Assistant
                  </h2>
@@ -179,76 +179,72 @@ export default function AskMessage() {
                  </p>
                </div>
             
-     <CardContent className="min-h-0 flex-1 p-0 bg-muted/10">
-    <Message className="h-full min-h-0 border-none shadow-none">
-                         <MessageContent className="h-full w-full">
-                            <div className="flex h-full w-full p-4">
-                                <MessageScrollerProvider>
-                                   <MessageScroller className="h-full w-full overflow-y-auto">
-                                        <MessageScrollerViewport className="h-full w-full pr-2">
-                                            <MessageScrollerContent className="flex flex-col gap-4">
-                                                {messages.length === 0 && (
-                                                    <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground text-sm p-8 text-center h-[300px]">
-                                                        <span className="text-4xl mb-4"><SparklesIcon className="w-4 h-4" /></span>
-                                                        <p>Hi there! I&apos;m an AI assistant.</p>
-                                                        <p className="mt-1">Feel free to ask me anything about the developer&apos;s experience, skills, and projects!</p>
-                                                    </div>
-                                                )}
-                                                {messages.map((message, i) => (
-                                                    <MessageScrollerItem 
-                                                        key={i}
-                                                        scrollAnchor={i === messages.length - 1 && !isLoading}
-                                                        className={message.role === "user" ? "flex justify-end" : "flex justify-start"}
-                                                    >
-                                                        <Bubble variant={message.role === "user" ? "default" : "muted"}>
-                                                         <BubbleContent>
-                                                         <div className="prose dark:prose-invert">
-                                                            <ReactMarkdown>
-                                                               {message.content}
-                                                            </ReactMarkdown>
-                                                         </div>
-                                                         </BubbleContent>
-                                                        </Bubble>
-                                                    </MessageScrollerItem>
-                                                ))} 
-                                                
-                                                {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
-                                                    <MessageScrollerItem 
-                                                        scrollAnchor={true}
-                                                        className="flex justify-start"
-                                                    >
-                                                        <Bubble variant="muted">
-                                                         <BubbleContent>
-                                                            <div className="flex space-x-1.5 py-1.5 items-center px-1">
-                                                              <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                                                              <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                                                              <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                                                            </div>
-                                                         </BubbleContent>
-                                                        </Bubble>
-                                                    </MessageScrollerItem>
-                                                )}
-                                                
-                                                {errorState && (
-                                                    <MessageScrollerItem className="flex justify-center mt-4">
-                                                        <Bubble variant="muted" className="bg-destructive/10 text-destructive border-destructive/20">
-                                                            <BubbleContent className="text-sm">
-                                                                {errorState}
-                                                            </BubbleContent>
-                                                        </Bubble>
-                                                    </MessageScrollerItem>
-                                                )}
-                                            </MessageScrollerContent>
-                                        </MessageScrollerViewport>
-                                    </MessageScroller>
-                                </MessageScrollerProvider>
-                            </div>
-                        </MessageContent>
-                    </Message>
+               <div className="flex-1 min-h-0 flex flex-col bg-muted/30">
+                 <MessageScrollerProvider>
+                     <MessageScroller className="h-full w-full overflow-y-auto">
+                         <MessageScrollerViewport className="h-full w-full p-4">
+                             <MessageScrollerContent className="flex flex-col gap-4">
+                                 {messages.length === 0 && (
+                                     <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground text-sm p-8 text-center h-full min-h-[200px]">
+                                         <span className="text-4xl mb-4"><SparklesIcon className="w-6 h-6 text-purple-400" /></span>
+                                         <p>Hi there! I&apos;m an AI assistant.</p>
+                                         <p className="mt-1">Feel free to ask me anything about the developer&apos;s experience, skills, and projects!</p>
+                                     </div>
+                                 )}
+                                 {messages.map((message, i) => (
+                                     <MessageScrollerItem 
+                                         key={i}
+                                         scrollAnchor={i === messages.length - 1 && !isLoading}
+                                         className={message.role === "user" ? "flex justify-end" : "flex justify-start"}
+                                     >
+                                         <Bubble variant={message.role === "user" ? "default" : "muted"} className="max-w-[85%]">
+                                          <BubbleContent>
+                                          <div className="prose prose-sm dark:prose-invert break-words">
+                                             <ReactMarkdown>
+                                                {message.content}
+                                             </ReactMarkdown>
+                                          </div>
+                                          </BubbleContent>
+                                         </Bubble>
+                                     </MessageScrollerItem>
+                                 ))} 
+                                 
+                                 {isLoading && messages.length > 0 && messages[messages.length - 1].role === 'user' && (
+                                     <MessageScrollerItem 
+                                         scrollAnchor={true}
+                                         className="flex justify-start"
+                                     >
+                                         <Bubble variant="muted">
+                                          <BubbleContent>
+                                             <div className="flex space-x-1.5 py-1.5 items-center px-1">
+                                               <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                                               <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                                               <div className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                                             </div>
+                                          </BubbleContent>
+                                         </Bubble>
+                                     </MessageScrollerItem>
+                                 )}
+                                 
+                                 {errorState && (
+                                     <MessageScrollerItem className="flex justify-center mt-4">
+                                         <Bubble variant="muted" className="bg-destructive/10 text-destructive border-destructive/20">
+                                             <BubbleContent className="text-sm">
+                                                 {errorState}
+                                             </BubbleContent>
+                                         </Bubble>
+                                     </MessageScrollerItem>
+                                 )}
+                             </MessageScrollerContent>
+                         </MessageScrollerViewport>
+                     </MessageScroller>
+                 </MessageScrollerProvider>
+               </div>
 
+               <div className="shrink-0 p-3 bg-background border-t">
                     <form onSubmit={handleSubmit} className="flex w-full items-end gap-2 relative">
                         <Textarea 
-                            className="flex-1 flex-shrink-0 min-h-[48px] max-h-[120px] resize-none pr-12 rounded-xl py-3 shadow-sm bg-background" 
+                            className="flex-1 min-h-[44px] max-h-[120px] resize-none pr-12 rounded-xl py-3 shadow-sm bg-muted/50 focus-visible:ring-1 focus-visible:ring-primary/50 text-sm" 
                             placeholder="Type your question..."
                             value={question} 
                             onChange={(event) => setQuestion(event.target.value)}
@@ -272,10 +268,7 @@ export default function AskMessage() {
                             <CircleStop className="w-4 h-4" />
                         </Button>
                         )
-                        
-                        
                         : (<Button 
-                            
                             type="submit" 
                             size="icon"
                             className="absolute right-2 bottom-2 rounded-full h-8 w-8 shadow-sm transition-all active:scale-95" 
@@ -283,13 +276,9 @@ export default function AskMessage() {
                         >
                             <ArrowUp className="w-4 h-4" />
                         </Button>)
-
                         }
-
-                        
                     </form>
-                </CardContent>
-    
+               </div>
             </Card>
         </section>
     );
