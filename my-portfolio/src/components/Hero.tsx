@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { Canvas} from "@react-three/fiber";
-import { Html, Float } from "@react-three/drei"
+import { motion } from "motion/react";
 import React, { useRef } from "react";
 import {
   Avatar,
@@ -86,26 +85,19 @@ export default function Hero() {
            
 
 
-           <div className="h-[500px] w-full">
-
-                                   <Canvas>
-            <React.Suspense fallback={null}>
-            <Float  speed={2} rotationIntensity={0.2} floatIntensity={1}>
-          <Html   transform
-  center
-  position={[0, 0, 0]}
-  distanceFactor={5}>
+           <motion.div 
+            animate={{ y: [0, -10, 0] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="w-full relative z-10 py-2"
+           >
             <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
-            {hero.headline}{" "} <br></br>
+              {hero.headline}
             </h1>
-            </Html>
-
-            </Float>
-                   </React.Suspense>
-             </Canvas>
-
-
-</div>
+           </motion.div>
 
 
             

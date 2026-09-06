@@ -1,6 +1,6 @@
 "use client"
 import { useState, useRef } from "react";
-import { SparklesIcon } from "lucide-react";
+import { MessageCircle, SparklesIcon } from "lucide-react";
 import {
   Card,
   CardFooter,
@@ -32,6 +32,7 @@ import {
    } from "@/components/ui/bubble";
 import { Button } from "../ui/button";
 import { ArrowUp, CircleStop } from "lucide-react";
+import { ChatBubbleBottomCenterIcon } from "@heroicons/react/24/outline";
 
 
 type ChatMessage = {
@@ -169,12 +170,16 @@ export default function AskMessage() {
     return (
         <section className="flex flex-col w-full mx-auto">
             <Card className="w-full shadow-2xl border flex flex-col overflow-hidden">
-                <div className="p-6 pb-4 border-b bg-card">
-                    <CardTitle className="text-2xl font-bold tracking-tight">Ask Me Anything!</CardTitle>
-                    <CardDescription className="text-base mt-2">
-                        Ask me anything about my projects, skills, or experience.
-                    </CardDescription>
-                </div>
+                
+               <div className="border-b border-border/50 px-6 py-4 bg-muted/30">
+                 <h2 className="font-bold text-lg text-foreground flex items-center gap-2">
+                   <span className="text-purple-500">✨</span> AI Assistant
+                 </h2>
+                 <p className="text-xs font-medium text-muted-foreground mt-0.5">
+                   Ask questions about her experience, skills and projects.
+                 </p>
+               </div>
+            
                 <CardContent className="h-[400px] p-0 flex flex-col bg-muted/10">
                     <Message className="flex-1 overflow-hidden border-none shadow-none">
                         <MessageContent className="h-full w-full">

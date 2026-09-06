@@ -13,7 +13,7 @@ import { FadeIn } from "@/components/ui/fade-in";
 import { supabase } from "@/lib/supabase";
 import AskMessage from "@/components/ai/AskMeAnything";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { MessageCircle } from "lucide-react";
+import {SparklesIcon } from "lucide-react";
 import {
   Tooltip,
   TooltipTrigger,
@@ -106,8 +106,8 @@ export default function Home() {
           <Tooltip>
               <TooltipTrigger render={
                   <PopoverTrigger render={
-                    <Button size="icon" className="h-14 w-14 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95">
-                      <MessageCircle className="h-6 w-6" />
+                    <Button size="icon" className="h-14 w-40 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95">
+                      <SparklesIcon />Ask Me Anything!
                     </Button>
 
                   }/>
