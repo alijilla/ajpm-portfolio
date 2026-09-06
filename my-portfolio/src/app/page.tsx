@@ -115,15 +115,14 @@ export default function Home() {
               }/>
               <TooltipContent side="right">Ask Me Anything</TooltipContent>
             </Tooltip>     
-          
-          <PopoverContent 
-            side="top" 
-            align="center"
-            sideOffset={16}
-            className="w-[80vw] sm:w-[350px] p-0 border-none shadow-2xl rounded-xl bg-transparent"
-          >
-            <AskMessage />
-          </PopoverContent>
+          <PopoverContent
+          side="top"
+          align="center"
+          sideOffset={16}
+          className="w-[80vw] sm:w-[380px] max-h-[calc(100vh-100px)] p-0 border-none shadow-2xl rounded-xl bg-transparent"
+        >
+          <AskMessage />
+        </PopoverContent>
         </Popover>
       </div>
 

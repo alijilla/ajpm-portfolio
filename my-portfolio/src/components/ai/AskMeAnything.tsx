@@ -169,9 +169,8 @@ export default function AskMessage() {
 
     return (
         <section className="flex flex-col w-full mx-auto">
-            <Card className="w-full shadow-2xl border flex flex-col overflow-hidden">
-                
-               <div className="border-b border-border/50 px-6 py-4 bg-muted/30">
+          <Card className="w-full max-h-[calc(100vh-100px)] shadow-2xl border flex flex-col overflow-hidden">                
+                <div className="shrink-0 border-b ...">
                  <h2 className="font-bold text-lg text-foreground flex items-center gap-2">
                    <span className="text-purple-500">✨</span> AI Assistant
                  </h2>
@@ -180,12 +179,12 @@ export default function AskMessage() {
                  </p>
                </div>
             
-                <CardContent className="h-[350px] p-0 flex flex-col bg-muted/10">
-                    <Message className="flex-1 overflow-hidden border-none shadow-none">
-                        <MessageContent className="h-full w-full">
+     <CardContent className="min-h-0 flex-1 p-0 bg-muted/10">
+    <Message className="h-full min-h-0 border-none shadow-none">
+                         <MessageContent className="h-full w-full">
                             <div className="flex h-full w-full p-4">
                                 <MessageScrollerProvider>
-                                    <MessageScroller className="h-full w-full"> 
+                                   <MessageScroller className="h-full w-full overflow-y-auto">
                                         <MessageScrollerViewport className="h-full w-full pr-2">
                                             <MessageScrollerContent className="flex flex-col gap-4">
                                                 {messages.length === 0 && (
@@ -246,11 +245,10 @@ export default function AskMessage() {
                             </div>
                         </MessageContent>
                     </Message>
-                </CardContent>
-                <CardFooter className="p-4 border-t bg-card">
+
                     <form onSubmit={handleSubmit} className="flex w-full items-end gap-2 relative">
                         <Textarea 
-                            className="flex-1 min-h-[48px] max-h-[120px] resize-none pr-12 rounded-xl py-3 shadow-sm bg-background" 
+                            className="flex-1 flex-shrink-0 min-h-[48px] max-h-[120px] resize-none pr-12 rounded-xl py-3 shadow-sm bg-background" 
                             placeholder="Type your question..."
                             value={question} 
                             onChange={(event) => setQuestion(event.target.value)}
@@ -290,7 +288,8 @@ export default function AskMessage() {
 
                         
                     </form>
-                </CardFooter>
+                </CardContent>
+    
             </Card>
         </section>
     );
