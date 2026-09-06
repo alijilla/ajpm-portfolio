@@ -84,13 +84,13 @@ export default function Hero() {
           <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
             {hero.headline}{" "} <br></br>
             </h1>
+            <span className="text-muted-foreground font-extrabold tracking-tight text-[18px]">
+              {hero.headline_1}
+            </span> 
 
           
 
-          <p className="text-base text-muted-foreground leading-relaxed max-w-md mt-4">
-            <span className="text-muted-foreground font-extrabold tracking-tight text-[18px]">
-              {hero.headline_1}
-            </span> <br></br>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-md mt-2">
             {hero.shortbio}
           </p>
 
