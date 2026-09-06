@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { Canvas} from "@react-three/fiber";
+import { Html, Float } from "@react-three/drei"
+import React, { useRef } from "react";
 import {
   Avatar,
   AvatarImage,
@@ -80,10 +83,37 @@ export default function Hero() {
           <Badge className="w-fit text-xs rounded-full px-3 py-1">
             {hero.role}
           </Badge>
+           
 
-          <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
+
+           <div className="h-[500px] w-full">
+
+                                   <Canvas>
+            <React.Suspense fallback={null}>
+            <Float  speed={2} rotationIntensity={0.2} floatIntensity={1}>
+          <Html   transform
+  center
+  position={[0, 0, 0]}
+  distanceFactor={5}>
+            <h1 className="text-5xl font-extrabold tracking-tight lg:text-6xl xl:text-7xl leading-[1.1] md:leading-[1.1]">
             {hero.headline}{" "} <br></br>
             </h1>
+            </Html>
+
+            </Float>
+                   </React.Suspense>
+             </Canvas>
+
+
+</div>
+
+
+            
+          
+     
+
+
+
             <span className="text-muted-foreground font-extrabold tracking-tight text-[18px]">
               {hero.headline_1}
             </span> 
