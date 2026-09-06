@@ -17,7 +17,7 @@ interface Certificateprops {
 
 export default function Certificates(props: Certificateprops) {
   return (
-    <article className="lowercase flex-1 min-w-[280px] max-w-full">
+    <article className="flex-1 min-w-[280px] max-w-full">
       <Card className="h-full flex flex-col hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
         <CardHeader className="flex-1 pb-4">
           <CardTitle className="text-base font-semibold tracking-tight leading-snug">

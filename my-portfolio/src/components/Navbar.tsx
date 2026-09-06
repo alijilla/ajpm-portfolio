@@ -24,7 +24,7 @@ function Navbar({ name }: NavbarProps) {
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
       {/* Desktop nav */}
       <nav id="navbar" className="hidden md:flex items-center justify-between max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <span className="font-bold lowercase">{name}</span>
+        <span className="font-bold">{name}</span>
         <ul className="flex flex-row gap-6 text-sm text-muted-foreground">
           {navlist.map((item) => (
             <li key={item.tabname}>
@@ -41,7 +41,7 @@ function Navbar({ name }: NavbarProps) {
 
       {/* Mobile nav */}
       <div className="md:hidden flex flex-row justify-between items-center max-w-5xl mx-auto px-4 py-4">
-        <span className="font-bold lowercase">{name}</span>
+        <span className="font-bold">{name}</span>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger aria-label="Open navigation menu">
             <Bars3Icon className="h-5 w-5" />

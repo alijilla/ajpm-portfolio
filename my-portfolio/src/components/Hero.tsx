@@ -56,7 +56,7 @@ export default function Hero() {
   },[])
      
   return (
-    <section  className="relative flex min-h-screen w-full items-center px-10  py-16 px-4 sm:px-6 lg:px-8" >
+    <section  className="relative flex min-h-screen w-full items-center px-10 py-16 px-4 sm:px-6 lg:px-8" >
       <article className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12">
       {isLoading ? (
         <>
@@ -90,7 +90,7 @@ export default function Hero() {
           <p className="text-base text-muted-foreground leading-relaxed max-w-md mt-4">
             <span className="text-muted-foreground font-extrabold tracking-tight text-[18px]">
               {hero.headline_1}
-            </span>
+            </span> <br></br>
             {hero.shortbio}
           </p>
 

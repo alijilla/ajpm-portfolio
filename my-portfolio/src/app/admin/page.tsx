@@ -328,7 +328,7 @@ export default function AdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-muted/30 p-4 lowercase">
+      <main className="min-h-screen flex items-center justify-center bg-muted/30 p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>admin login</CardTitle>
@@ -366,7 +366,7 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-muted/30 p-4 md:p-10 lowercase">
+    <main className="min-h-screen bg-muted/30 p-4 md:p-10">
       <div className="max-w-5xl mx-auto space-y-8">
         
         {/* Header */}

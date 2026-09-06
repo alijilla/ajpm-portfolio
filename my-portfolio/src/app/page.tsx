@@ -212,7 +212,7 @@ export default function Home() {
 
         <section id="contact">
           <FadeIn>
-            <ContactForm cta={cta || "open to junior frontend / web developer roles."} />
+            <ContactForm />
           </FadeIn>
         </section>
 

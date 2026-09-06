@@ -59,7 +59,7 @@ export default function Skills() {
                 <Badge
                   key={item.id}
                   variant="secondary"
-                  className="text-xs px-3 py-1 rounded-md lowercase"
+                  className="text-xs px-3 py-1 rounded-md"
                 >
                   {item.name}
                 </Badge>

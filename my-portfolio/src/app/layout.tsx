@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${manrope.variable} min-h-screen bg-background text-foreground antialiased dark`}
+        className={`${manrope.variable} min-h-screen bg-background text-foreground antialiased `}
       >
         {children}
       </body>

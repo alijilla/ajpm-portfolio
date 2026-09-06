@@ -35,7 +35,7 @@ type ProjectCard = {
 function ImagePlaceholder({ title }: { title: string }) {
   return (
     <div className="w-full h-40 bg-muted rounded-md flex items-center justify-center">
-      <span className="text-xs text-muted-foreground lowercase">{title}</span>
+      <span className="text-xs text-muted-foreground">{title}</span>
     </div>
   );
 }
@@ -95,10 +95,10 @@ export default function ProjectCard() {
                 )}
               </CardHeader>
               <CardContent className="pt-4 pb-2">
-                <CardTitle className="text-sm font-semibold lowercase leading-snug">
+                <CardTitle className="text-sm font-semibold leading-snug">
                   {project.title}
                 </CardTitle>
-                <CardDescription className="text-xs mt-1 lowercase">
+                <CardDescription className="text-xs mt-1">
                   {project.type}
                 </CardDescription>
               </CardContent>
@@ -107,10 +107,10 @@ export default function ProjectCard() {
 
           {/* Dialog detail view */}
           <DialogContent className="max-w-lg">
-            <DialogTitle className="text-lg font-semibold lowercase">
+            <DialogTitle className="text-lg font-semibold">
               {project.title}
             </DialogTitle>
-            <p className="text-xs text-muted-foreground lowercase -mt-2">
+            <p className="text-xs text-muted-foreground -mt-2">
               {project.type}
             </p>
 
@@ -149,7 +149,7 @@ export default function ProjectCard() {
             {/* Stack badges + live link */}
             <CardFooter className="px-0 pb-0 flex flex-wrap gap-2">
               {project.stack.map((tech) => (
-                <Badge key={tech} variant="secondary" className="lowercase text-xs">
+                <Badge key={tech} variant="secondary" className="text-xs">
                   {tech}
                 </Badge>
               ))}

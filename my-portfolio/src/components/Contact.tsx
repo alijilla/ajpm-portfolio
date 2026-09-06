@@ -30,8 +30,8 @@ function MessageSentAlert() {
       }`}
     >
       <CheckCircleIcon className="h-4 w-4 text-emerald-600" />
-      <AlertTitle className="lowercase">message sent</AlertTitle>
-      <AlertDescription className="lowercase">
+      <AlertTitle className="">message sent</AlertTitle>
+      <AlertDescription className="">
         your message was successfully sent!
       </AlertDescription>
     </Alert>
@@ -81,8 +81,8 @@ export function ContactForm({ cta }: { cta?: string }) {
       {/* Left side: Info & Socials */}
       <div className="flex flex-col gap-6 md:basis-1/2">
         <div className="space-y-4">
-          <p className="text-base text-muted-foreground leading-relaxed ">
-            {cta}
+          <p className="text-base text-muted-foreground leading-relaxed">
+            I&apos;m currently open to junior software, full-stack, web development, and AI integration opportunities.
           </p>
         </div>
 
@@ -105,7 +105,7 @@ export function ContactForm({ cta }: { cta?: string }) {
           <a href="tel:09062815416" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Phone">
             <PhoneIcon className="h-5 w-5" />
           </a>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center text-xs lowercase text-muted-foreground hover:text-foreground transition-colors">
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors">
             <ArrowDownTrayIcon className="h-3.5 w-3.5 mr-1" />
             resume
           </a>
@@ -116,24 +116,24 @@ export function ContactForm({ cta }: { cta?: string }) {
       <div className="md:basis-1/2 w-full max-w-md mx-auto md:mx-0">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5 text-left">
-            <label htmlFor="name" className="text-xs font-medium text-muted-foreground lowercase">name</label>
-            <Input id="name" placeholder="your name" className="lowercase" {...register("name")} />
-            {errors.name && <p className="text-xs text-destructive lowercase">{errors.name.message}</p>}
+            <label htmlFor="name" className="text-xs font-medium text-muted-foreground">name</label>
+            <Input id="name" placeholder="your name" className="" {...register("name")} />
+            {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
           </div>
 
           <div className="flex flex-col gap-1.5 text-left">
-            <label htmlFor="email" className="text-xs font-medium text-muted-foreground lowercase">email</label>
-            <Input id="email" placeholder="you@email.com" className="lowercase" {...register("email")} />
-            {errors.email && <p className="text-xs text-destructive lowercase">{errors.email.message}</p>}
+            <label htmlFor="email" className="text-xs font-medium text-muted-foreground">email</label>
+            <Input id="email" placeholder="you@email.com" className="" {...register("email")} />
+            {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
 
           <div className="flex flex-col gap-1.5 text-left">
-            <label htmlFor="message" className="text-xs font-medium text-muted-foreground lowercase">message</label>
-            <Textarea id="message" rows={4} placeholder="what would you like to say?" className="lowercase resize-none" {...register("message")} />
-            {errors.message && <p className="text-xs text-destructive lowercase">{errors.message.message}</p>}
+            <label htmlFor="message" className="text-xs font-medium text-muted-foreground">message</label>
+            <Textarea id="message" rows={4} placeholder="what would you like to say?" className="resize-none" {...register("message")} />
+            {errors.message && <p className="text-xs text-destructive">{errors.message.message}</p>}
           </div>
 
-          <Button type="submit" className="mt-2 lowercase" disabled={isSubmitting}>
+          <Button type="submit" className="mt-2" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="animate-spin mr-2 h-4 w-4" />
@@ -146,7 +146,7 @@ export function ContactForm({ cta }: { cta?: string }) {
         </form>
 
         {messageSent && <MessageSentAlert />}
-        {errorMsg && <p className="text-sm text-destructive mt-4 lowercase">{errorMsg}</p>}
+        {errorMsg && <p className="text-sm text-destructive mt-4">{errorMsg}</p>}
       </div>
     </div>
   );
